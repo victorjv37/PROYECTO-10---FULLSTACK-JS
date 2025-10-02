@@ -1,0 +1,39 @@
+{
+  "name": "academia-heroes-frontend",
+  "version": "1.0.0",
+  "description": "Frontend para la Academia de Héroes U.A. - Sistema de entrenamientos y gestión de estudiantes",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "start": "npx live-server --port=3000 --open=index.html",
+    "dev": "npx live-server --port=3000 --open=index.html --watch=.",
+    "build": "echo 'Build process - static files ready for deployment'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "my-hero-academia",
+    "entrenamientos",
+    "academia",
+    "heroes",
+    "frontend",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Academia U.A.",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/academia-heroes-frontend.git"
+  },
+  "homepage": "https://tu-usuario.github.io/academia-heroes-frontend",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

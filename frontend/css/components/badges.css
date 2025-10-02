@@ -1,0 +1,101 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.badge-primary { background: var(--gradient-deku); color: white; }
+.badge-secondary { background: var(--gradient-ofa); color: white; }
+.badge-success { background: var(--color-success); color: white; }
+.badge-warning { background: var(--color-warning); color: var(--color-black); }
+.badge-danger { background: var(--color-danger); color: white; }
+.badge-outline { background: transparent; color: var(--color-deku); border: 1px solid var(--color-deku); }
+
+.quirk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+  color: white;
+}
+
+.quirk-emision { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+.quirk-transformacion { background: linear-gradient(135deg, #ea580c, #f97316); }
+.quirk-mutacion { background: linear-gradient(135deg, #15803d, #22c55e); }
+
+.training-type {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+  color: white;
+  text-transform: capitalize;
+}
+
+.training-type.combate { background: linear-gradient(135deg, #dc2626, #ef4444); }
+.training-type.rescate { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+.training-type.quirk { background: linear-gradient(135deg, #7c3aed, #8b5cf6); }
+.training-type.resistencia { background: linear-gradient(135deg, #ea580c, #f97316); }
+.training-type.cooperacion { background: linear-gradient(135deg, #15803d, #22c55e); }
+
+.difficulty-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+  text-transform: capitalize;
+}
+
+.difficulty-badge.facil { background: var(--color-success); color: white; }
+.difficulty-badge.intermedio { background: var(--color-warning); color: var(--color-black); }
+.difficulty-badge.dificil { background: var(--color-danger); color: white; }
+
+.glow-deku {
+  text-shadow: 0 0 10px var(--color-deku-glow);
+  animation: pulse-deku 2s infinite;
+}
+
+.glow-ofa {
+  text-shadow: 0 0 10px var(--color-ofa-glow);
+  animation: pulse-ofa 2s infinite;
+}
+
+@keyframes pulse-deku {
+  0%, 100% { text-shadow: 0 0 10px var(--color-deku-glow); }
+  50% { text-shadow: 0 0 20px var(--color-deku-glow), 0 0 30px var(--color-deku-glow); }
+}
+
+@keyframes pulse-ofa {
+  0%, 100% { text-shadow: 0 0 10px var(--color-ofa-glow); }
+  50% { text-shadow: 0 0 20px var(--color-ofa-glow), 0 0 30px var(--color-ofa-glow); }
+}
+
+.text-gradient-deku {
+  background: var(--gradient-deku);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-ofa {
+  background: var(--gradient-ofa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

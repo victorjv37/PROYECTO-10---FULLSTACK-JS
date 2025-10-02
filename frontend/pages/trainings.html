@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💪 Entrenamientos - Academia U.A.</title>
+    
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages/trainings.css">
+    <link rel="stylesheet" href="../css/pages/trainings-edit.css">
+    
+    <link rel="icon" href="../assets/gif almyght.gif">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="dashboard.html" class="navbar-brand">
+                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
+                </a>
+                
+                
+                <ul class="navbar-nav hidden md:flex">
+                    <li><a href="dashboard.html" class="navbar-link">Dashboard</a></li>
+                    <li><a href="trainings.html" class="navbar-link active">Entrenamientos</a></li>
+                    <li><a href="ranking.html" class="navbar-link">Ranking</a></li>
+                    <li class="admin-only" style="display: none;"><a href="admin.html" class="navbar-link">Admin</a></li>
+                    <li><a href="profile.html" class="navbar-link">Mi Perfil</a></li>
+                </ul>
+                
+                
+                <div class="flex items-center gap-4">
+                    <div class="user-info hidden md:flex items-center gap-2">
+                        <img src="" alt="Avatar" class="user-avatar w-8 h-8 rounded-full border-2 border-deku-green">
+                        <span class="user-name text-sm font-medium">Cargando...</span>
+                        <span class="badge badge-primary user-level">Lv. --</span>
+                    </div>
+                    
+                    <button onclick="logout()" class="btn btn-ghost btn-sm">
+                        🚪 Salir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="container py-8">
+        
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-2">💪 Entrenamientos Disponibles</h1>
+            <p class="text-secondary">Entrena duro para convertirte en el mejor héroe. ¡Plus Ultra!</p>
+        </div>
+
+        
+        <div class="card mb-8">
+            <div class="card-body">
+                <div class="filters-grid">
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">🔍 Buscar</label>
+                        <input type="text" id="searchInput" class="form-input" placeholder="Buscar entrenamientos...">
+                    </div>
+                    
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">⚡ Tipo</label>
+                        <select id="tipoFilter" class="form-select">
+                            <option value="all">Todos</option>
+                            <option value="combate">Combate</option>
+                            <option value="rescate">Rescate</option>
+                            <option value="quirk-development">Desarrollo de Quirk</option>
+                            <option value="resistencia">Resistencia</option>
+                            <option value="estrategia">Estrategia</option>
+                            <option value="trabajo-en-equipo">Trabajo en Equipo</option>
+                            <option value="mision-practica">Misión Práctica</option>
+                        </select>
+                    </div>
+                    
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">📊 Dificultad</label>
+                        <select id="dificultadFilter" class="form-select">
+                            <option value="all">Todas</option>
+                            <option value="principiante">Principiante</option>
+                            <option value="intermedio">Intermedio</option>
+                            <option value="avanzado">Avanzado</option>
+                            <option value="extremo">Extremo</option>
+                        </select>
+                    </div>
+                    
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">🔄 Ordenar por</label>
+                        <select id="ordenarFilter" class="form-select">
+                            <option value="fechaHora-asc">Fecha (Próximos)</option>
+                            <option value="fechaHora-desc">Fecha (Lejanos)</option>
+                            <option value="nivelRequerido-asc">Nivel (Menor)</option>
+                            <option value="nivelRequerido-desc">Nivel (Mayor)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mt-4 flex gap-2">
+                    <button onclick="aplicarFiltros()" class="btn btn-primary">Aplicar Filtros</button>
+                    <button onclick="limpiarFiltros()" class="btn btn-outline">Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="trainingsContainer" class="trainings-grid">
+            
+            <div class="col-span-full text-center py-12">
+                <div class="spinner mx-auto mb-4"></div>
+                <p class="text-muted">Cargando entrenamientos...</p>
+            </div>
+        </div>
+
+        
+        <div id="paginationContainer" class="mt-8 flex justify-center"></div>
+    </main>
+
+    
+    <div id="trainingDetailModal" class="modal">
+        <div class="modal-overlay" onclick="closeTrainingModal()"></div>
+        <div class="modal-content">
+            <div class="training-detail-header">
+                <img id="modalTrainingImage" src="" alt="Entrenamiento" class="training-detail-image">
+                <span id="modalTrainingType" class="training-detail-badge">Tipo</span>
+            </div>
+            
+            <div class="training-detail-info">
+                <h2 id="modalTrainingTitle" class="training-detail-title">Título del Entrenamiento</h2>
+                <p id="modalTrainingDescription" class="training-detail-description">Descripción...</p>
+                
+                
+                <div class="mb-6 p-4 bg-secondary rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <img id="modalInstructorAvatar" src="" alt="Instructor" class="w-12 h-12 rounded-full border-2 border-deku-green">
+                        <div>
+                            <p class="text-xs text-muted mb-1">👨‍🏫 Instructor</p>
+                            <h4 id="modalInstructorName" class="font-bold">Instructor</h4>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="training-detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-icon">📅</div>
+                        <div class="detail-content">
+                            <h4>Fecha y Hora</h4>
+                            <p id="modalFecha">---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">📍</div>
+                        <div class="detail-content">
+                            <h4>Ubicación</h4>
+                            <p id="modalUbicacion">---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">⏱️</div>
+                        <div class="detail-content">
+                            <h4>Duración</h4>
+                            <p id="modalDuracion">---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">📈</div>
+                        <div class="detail-content">
+                            <h4>Nivel Requerido</h4>
+                            <p id="modalNivel">---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">🎯</div>
+                        <div class="detail-content">
+                            <h4>Dificultad</h4>
+                            <p id="modalDificultad">---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">👥</div>
+                        <div class="detail-content">
+                            <h4>Capacidad</h4>
+                            <p id="modalCapacidad">---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">⭐</div>
+                        <div class="detail-content">
+                            <h4>Experiencia</h4>
+                            <p id="modalExperiencia">---</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">🏆</div>
+                        <div class="detail-content">
+                            <h4>Puntos</h4>
+                            <p id="modalPuntos">---</p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="attendees-section">
+                    <div class="attendees-header">
+                        <h3 class="text-xl font-bold">👥 Lista de Asistentes</h3>
+                        <span class="attendees-count" id="attendeesCount">0 inscritos</span>
+                    </div>
+                    <div id="attendeesList" class="attendees-grid">
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button onclick="closeTrainingModal()" class="btn btn-outline">❌ Cerrar</button>
+                <button id="modalActionBtn" class="btn btn-primary">Acción</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="editTrainingModal" class="modal">
+        <div class="modal-overlay" onclick="closeEditTrainingModal()"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 class="modal-title">✏️ Editar Entrenamiento</h2>
+                <button onclick="closeEditTrainingModal()" class="modal-close">❌</button>
+            </div>
+            
+            <form id="editTrainingForm" class="edit-form">
+                <div class="form-section">
+                    <h3 class="section-title">📝 Información Básica</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editTitulo" class="form-label">Título del Entrenamiento</label>
+                            <input type="text" id="editTitulo" name="titulo" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editTipo" class="form-label">Tipo</label>
+                            <select id="editTipo" name="tipo" class="form-select" required>
+                                <option value="combate">Combate</option>
+                                <option value="rescate">Rescate</option>
+                                <option value="quirk-development">Desarrollo de Quirk</option>
+                                <option value="resistencia">Resistencia</option>
+                                <option value="estrategia">Estrategia</option>
+                                <option value="trabajo-en-equipo">Trabajo en Equipo</option>
+                                <option value="mision-practica">Misión Práctica</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editDescripcion" class="form-label">Descripción</label>
+                        <textarea id="editDescripcion" name="descripcion" class="form-textarea" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editUbicacion" class="form-label">Ubicación</label>
+                            <input type="text" id="editUbicacion" name="ubicacion" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDuracion" class="form-label">Duración (minutos)</label>
+                            <input type="number" id="editDuracion" name="duracion" class="form-input" min="15" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">📅 Fecha y Hora</h3>
+                    <div class="form-group">
+                        <label for="editFechaHora" class="form-label">Fecha y Hora</label>
+                        <input type="datetime-local" id="editFechaHora" name="fechaHora" class="form-input" required>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">⚙️ Configuración</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editNivelRequerido" class="form-label">Nivel Requerido</label>
+                            <input type="number" id="editNivelRequerido" name="nivelRequerido" class="form-input" min="1" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDificultad" class="form-label">Dificultad</label>
+                            <select id="editDificultad" name="dificultad" class="form-select" required>
+                                <option value="principiante">Principiante</option>
+                                <option value="intermedio">Intermedio</option>
+                                <option value="avanzado">Avanzado</option>
+                                <option value="extremo">Extremo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editCapacidadMaxima" class="form-label">Capacidad Máxima</label>
+                            <input type="number" id="editCapacidadMaxima" name="capacidadMaxima" class="form-input" min="1" max="50" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">🏆 Recompensas</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editExperiencia" class="form-label">Experiencia</label>
+                            <input type="number" id="editExperiencia" name="experiencia" class="form-input" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="editPuntos" class="form-label">Puntos</label>
+                            <input type="number" id="editPuntos" name="puntos" class="form-input" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">🖼️ Imagen</h3>
+                    <div class="form-group">
+                        <label for="editImagen" class="form-label">Imagen del Entrenamiento</label>
+                        <input type="file" id="editImagen" name="imagen" class="form-input" accept="image/*">
+                        <div id="currentImagePreview" class="image-preview"></div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">👥 Gestión de Asistentes</h3>
+                    <div class="attendees-management">
+                        <div class="attendees-header">
+                            <h4>Asistentes Inscritos (<span id="editAttendeesCount">0</span>)</h4>
+                            <button type="button" onclick="showRemoveAttendeeModal()" class="btn btn-outline btn-sm">
+                                🗑️ Eliminar Asistentes
+                            </button>
+                        </div>
+                        <div id="editAttendeesList" class="edit-attendees-list">
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button onclick="closeEditTrainingModal()" class="btn btn-outline">❌ Cancelar</button>
+                <button type="button" onclick="saveTrainingChanges()" class="btn btn-primary">
+                    💾 Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="removeAttendeeModal" class="modal">
+        <div class="modal-overlay" onclick="closeRemoveAttendeeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🗑️ Eliminar Asistentes</h3>
+                <button onclick="closeRemoveAttendeeModal()" class="modal-close">❌</button>
+            </div>
+            <div class="modal-body">
+                <div id="removeAttendeesList" class="remove-attendees-list">
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeRemoveAttendeeModal()" class="btn btn-outline">Cancelar</button>
+                <button onclick="confirmRemoveAttendees()" class="btn btn-danger">Eliminar Seleccionados</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="../utils/api.js"></script>
+    <script src="../js/main.js"></script>
+    
+    
+    <script>
+        let currentPage = 1;
+        let currentFilters = {};
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTrainings();
+        });
+
+        async function loadTrainings(page = 1) {
+            try {
+                const filters = {
+                    page,
+                    limit: 12,
+                    ...currentFilters
+                };
+
+                const response = await API.Training.getAll(filters);
+                
+                if (response.success) {
+                    displayTrainings(response.data.entrenamientos);
+                    displayPagination(response.data.paginaActual, response.data.totalPaginas);
+                }
+            } catch (error) {
+                console.error('Error cargando entrenamientos:', error);
+                document.getElementById('trainingsContainer').innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-4xl mb-4">😕</div>
+                        <p class="text-muted">Error al cargar los entrenamientos</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayTrainings(trainings) {
+            const container = document.getElementById('trainingsContainer');
+            
+            if (trainings.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-4xl mb-4">🎯</div>
+                        <p class="text-muted text-lg mb-2">No se encontraron entrenamientos</p>
+                        <p class="text-sm text-secondary">Intenta ajustar los filtros</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = trainings.map(training => createTrainingCard(training)).join('');
+        }
+
+        function createTrainingCard(training) {
+            const isEnrolled = training.participantes?.some(p => p._id === window.currentUser?._id);
+            const isFull = training.numeroParticipantes >= training.capacidadMaxima;
+            const canEnroll = !isEnrolled && !isFull && training.nivelRequerido <= (window.currentUser?.nivel || 1);
+            const isProfessor = window.currentUser?.rol === 'profesor' || window.currentUser?.rol === 'admin';
+            const isMyTraining = training.instructor?._id === window.currentUser?._id || 
+                                training.instructor?.id === window.currentUser?.id ||
+                                (isProfessor && training.instructor?.nombre === window.currentUser?.nombre);
+            
+            // Debug para ver los datos
+            if (isProfessor) {
+                console.log('Debug Professor:', {
+                    currentUser: window.currentUser,
+                    instructor: training.instructor,
+                    isMyTraining: isMyTraining,
+                    trainingTitle: training.titulo
+                });
+            }
+            
+            return `
+                <div class="training-card" data-training-id="${training._id}">
+                    <div class="training-image">
+                        <img src="${training.imagen ? `http://localhost:5000/uploads/${training.imagen}` : 'https://via.placeholder.com/400x200?text=Entrenamiento'}" 
+                             alt="${training.titulo}"
+                             onerror="this.src='https://via.placeholder.com/400x200?text=Entrenamiento'">
+                        <span class="training-badge badge-${training.tipo}">${training.tipo}</span>
+                    </div>
+                    
+                    <div class="training-content">
+                        <h3 class="training-title">${training.titulo}</h3>
+                        <p class="training-description">${training.descripcion.substring(0, 120)}...</p>
+                        
+                        <div class="training-meta">
+                            <div class="meta-item">
+                                <span class="meta-icon">👨‍🏫</span>
+                                <span class="meta-text">${training.instructor?.nombreHeroe || training.instructor?.nombre || 'Instructor'}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-icon">📅</span>
+                                <span class="meta-text">${API.Utils.formatRelativeDate(training.fechaHora)}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-icon">📍</span>
+                                <span class="meta-text">${training.ubicacion}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-icon">⏱️</span>
+                                <span class="meta-text">${API.Utils.formatDuration(training.duracion)}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="training-stats">
+                            <div class="stat">
+                                <span class="stat-label">Nivel</span>
+                                <span class="stat-value">${training.nivelRequerido}</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Dificultad</span>
+                                <span class="stat-value dificultad-${training.dificultad}">${training.dificultad}</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Plazas</span>
+                                <span class="stat-value">${training.numeroParticipantes}/${training.capacidadMaxima}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="training-actions">
+                            ${isMyTraining
+                                ? `<button onclick="editTraining('${training._id}')" class="btn btn-primary btn-block">
+                                    ✏️ Editar Entrenamiento
+                                </button>`
+                                : isEnrolled 
+                                    ? `<button onclick="unenrollTraining('${training._id}')" class="btn btn-outline btn-block">
+                                        ❌ Cancelar Inscripción
+                                    </button>`
+                                    : isFull 
+                                        ? `<button class="btn btn-disabled btn-block" disabled>
+                                            🚫 Cupo Lleno
+                                        </button>`
+                                        : canEnroll
+                                            ? `<button onclick="enrollTraining('${training._id}')" class="btn btn-primary btn-block">
+                                                ✅ Inscribirse
+                                            </button>`
+                                            : `<button class="btn btn-disabled btn-block" disabled>
+                                                🔒 Nivel Requerido: ${training.nivelRequerido}
+                                            </button>`
+                            }
+                            <button onclick="viewTrainingDetails('${training._id}')" class="btn btn-ghost btn-sm btn-block mt-2">
+                                👁️ Ver Detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayPagination(currentPage, totalPages) {
+            const container = document.getElementById('paginationContainer');
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '<div class="pagination">';
+            
+            
+            html += `<button onclick="loadTrainings(${currentPage - 1})" 
+                        class="pagination-btn ${currentPage === 1 ? 'disabled' : ''}"
+                        ${currentPage === 1 ? 'disabled' : ''}>
+                        ← Anterior
+                    </button>`;
+            
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    html += `<button onclick="loadTrainings(${i})" 
+                                class="pagination-btn ${i === currentPage ? 'active' : ''}">
+                                ${i}
+                            </button>`;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    html += `<span class="pagination-dots">...</span>`;
+                }
+            }
+            
+            
+            html += `<button onclick="loadTrainings(${currentPage + 1})" 
+                        class="pagination-btn ${currentPage === totalPages ? 'disabled' : ''}"
+                        ${currentPage === totalPages ? 'disabled' : ''}>
+                        Siguiente →
+                    </button>`;
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function enrollTraining(id) {
+            try {
+                const response = await API.Training.enroll(id);
+                if (response.success) {
+                    API.showToast('¡Te has inscrito exitosamente! ¡Plus Ultra!', 'success');
+                    loadTrainings(currentPage);
+                }
+            } catch (error) {
+                console.error('Error inscribiéndose:', error);
+                API.showToast('Error al inscribirse: ' + error.message, 'error');
+            }
+        }
+
+        async function unenrollTraining(id) {
+            const confirmed = await API.showConfirmModal('¿Estás seguro de cancelar tu inscripción a este entrenamiento?');
+            if (!confirmed) return;
+            
+            try {
+                const response = await API.Training.unenroll(id);
+                if (response.success) {
+                    API.showToast('Inscripción cancelada', 'info');
+                    loadTrainings(currentPage);
+                }
+            } catch (error) {
+                console.error('Error cancelando inscripción:', error);
+                API.showToast('Error al cancelar: ' + error.message, 'error');
+            }
+        }
+
+        async function viewTrainingDetails(id) {
+            try {
+                const response = await API.Training.getById(id);
+                if (response.success) {
+                    showTrainingDetailModal(response.data);
+                }
+            } catch (error) {
+                console.error('Error cargando detalles:', error);
+                API.showToast('Error al cargar los detalles del entrenamiento', 'error');
+            }
+        }
+
+        function showTrainingDetailModal(training) {
+            const modal = document.getElementById('trainingDetailModal');
+            const isEnrolled = training.participantes?.some(p => p._id === window.currentUser?._id);
+            const isFull = training.numeroParticipantes >= training.capacidadMaxima;
+            const canEnroll = !isEnrolled && !isFull && training.nivelRequerido <= (window.currentUser?.nivel || 1);
+            const isMyTraining = training.instructor?._id === window.currentUser?._id || 
+                                training.instructor?.id === window.currentUser?.id ||
+                                ((window.currentUser?.rol === 'profesor' || window.currentUser?.rol === 'admin') && 
+                                 training.instructor?.nombre === window.currentUser?.nombre);
+            
+            
+            document.getElementById('modalTrainingImage').src = training.imagen 
+                ? `http://localhost:5000/uploads/${training.imagen}` 
+                : 'https://via.placeholder.com/800x300?text=Entrenamiento';
+            
+            
+            document.getElementById('modalTrainingTitle').textContent = training.titulo;
+            document.getElementById('modalTrainingType').textContent = training.tipo;
+            document.getElementById('modalTrainingDescription').textContent = training.descripcion;
+            
+            
+            document.getElementById('modalInstructorName').textContent = training.instructor?.nombreHeroe || training.instructor?.nombre || 'Sin asignar';
+            document.getElementById('modalInstructorAvatar').src = training.instructor?.avatar 
+                ? `http://localhost:5000/uploads/${training.instructor.avatar}`
+                : API.Utils.getDefaultAvatar(training.instructor?.nombre || 'Instructor');
+            
+            
+            document.getElementById('modalFecha').textContent = API.Utils.formatDate(training.fechaHora);
+            document.getElementById('modalUbicacion').textContent = training.ubicacion;
+            document.getElementById('modalDuracion').textContent = API.Utils.formatDuration(training.duracion);
+            document.getElementById('modalNivel').textContent = `Nivel ${training.nivelRequerido}`;
+            document.getElementById('modalDificultad').textContent = training.dificultad;
+            document.getElementById('modalCapacidad').textContent = `${training.numeroParticipantes}/${training.capacidadMaxima}`;
+            
+            
+            document.getElementById('modalExperiencia').textContent = `+${training.recompensas?.experiencia || 0} XP`;
+            document.getElementById('modalPuntos').textContent = `+${training.recompensas?.puntos || 0} pts`;
+            
+            
+            displayAttendees(training.participantes || []);
+            
+            
+            const actionBtn = document.getElementById('modalActionBtn');
+            if (isMyTraining) {
+                actionBtn.textContent = '✏️ Editar Entrenamiento';
+                actionBtn.className = 'btn btn-primary btn-block';
+                actionBtn.disabled = false;
+                actionBtn.onclick = () => {
+                    modal.classList.remove('active');
+                    editTraining(training._id);
+                };
+            } else if (isEnrolled) {
+                actionBtn.textContent = '❌ Cancelar Inscripción';
+                actionBtn.className = 'btn btn-outline btn-block';
+                actionBtn.onclick = () => {
+                    modal.classList.remove('active');
+                    unenrollTraining(training._id);
+                };
+            } else if (isFull) {
+                actionBtn.textContent = '🚫 Cupo Lleno';
+                actionBtn.className = 'btn btn-disabled btn-block';
+                actionBtn.disabled = true;
+            } else if (canEnroll) {
+                actionBtn.textContent = '✅ Inscribirse Ahora';
+                actionBtn.className = 'btn btn-primary btn-block';
+                actionBtn.disabled = false;
+                actionBtn.onclick = () => {
+                    modal.classList.remove('active');
+                    enrollTraining(training._id);
+                };
+            } else {
+                actionBtn.textContent = `🔒 Nivel Requerido: ${training.nivelRequerido}`;
+                actionBtn.className = 'btn btn-disabled btn-block';
+                actionBtn.disabled = true;
+            }
+            
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function displayAttendees(attendees) {
+            const container = document.getElementById('attendeesList');
+            
+            
+            document.getElementById('attendeesCount').textContent = `${attendees.length} inscritos`;
+            
+            if (attendees.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-attendees">
+                        <div class="empty-attendees-icon">👥</div>
+                        <p>Aún no hay asistentes inscritos</p>
+                        <p class="text-sm text-muted mt-2">¡Sé el primero en unirte!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = attendees.map(attendee => `
+                <div class="attendee-card">
+                    <img src="${attendee.avatar ? `http://localhost:5000/uploads/${attendee.avatar}` : API.Utils.getDefaultAvatar(attendee.nombre)}" 
+                         alt="${attendee.nombre}" 
+                         class="attendee-avatar">
+                    <div class="attendee-info">
+                        <h4 class="attendee-name">${attendee.nombreHeroe || attendee.nombre}</h4>
+                        <p class="attendee-class">${attendee.clase}</p>
+                    </div>
+                    <span class="attendee-level">Lv. ${attendee.nivel}</span>
+                </div>
+            `).join('');
+        }
+
+        function closeTrainingModal() {
+            const modal = document.getElementById('trainingDetailModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function aplicarFiltros() {
+            const tipo = document.getElementById('tipoFilter').value;
+            const dificultad = document.getElementById('dificultadFilter').value;
+            const busqueda = document.getElementById('searchInput').value;
+            const [ordenPor, orden] = document.getElementById('ordenarFilter').value.split('-');
+
+            currentFilters = {};
+            if (tipo !== 'all') currentFilters.tipo = tipo;
+            if (dificultad !== 'all') currentFilters.dificultad = dificultad;
+            if (busqueda) currentFilters.busqueda = busqueda;
+            currentFilters.ordenPor = ordenPor;
+            currentFilters.orden = orden;
+
+            currentPage = 1;
+            loadTrainings(1);
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('tipoFilter').value = 'all';
+            document.getElementById('dificultadFilter').value = 'all';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('ordenarFilter').value = 'fechaHora-asc';
+            
+            currentFilters = {};
+            currentPage = 1;
+            loadTrainings(1);
+        }
+
+        let currentEditingTraining = null;
+        let attendeesToRemove = [];
+
+        function editTraining(id) {
+            currentEditingTraining = id;
+            loadTrainingForEdit(id);
+        }
+
+        async function loadTrainingForEdit(id) {
+            try {
+                const response = await API.Training.getById(id);
+                if (response.success) {
+                    populateEditForm(response.data);
+                    showEditTrainingModal();
+                }
+            } catch (error) {
+                console.error('Error cargando entrenamiento para editar:', error);
+                API.showToast('Error al cargar el entrenamiento', 'error');
+            }
+        }
+
+        function populateEditForm(training) {
+            document.getElementById('editTitulo').value = training.titulo || '';
+            document.getElementById('editTipo').value = training.tipo || 'combate';
+            document.getElementById('editDescripcion').value = training.descripcion || '';
+            document.getElementById('editUbicacion').value = training.ubicacion || '';
+            document.getElementById('editDuracion').value = training.duracion || 60;
+            
+            const fechaHora = new Date(training.fechaHora);
+            const fechaHoraFormatted = fechaHora.toISOString().slice(0, 16);
+            document.getElementById('editFechaHora').value = fechaHoraFormatted;
+            
+            document.getElementById('editNivelRequerido').value = training.nivelRequerido || 1;
+            document.getElementById('editDificultad').value = training.dificultad || 'principiante';
+            document.getElementById('editCapacidadMaxima').value = training.capacidadMaxima || 10;
+            
+            document.getElementById('editExperiencia').value = training.recompensas?.experiencia || 0;
+            document.getElementById('editPuntos').value = training.recompensas?.puntos || 0;
+            
+            showCurrentImage(training.imagen);
+            displayEditAttendees(training.participantes || []);
+        }
+
+        function showCurrentImage(imagen) {
+            const preview = document.getElementById('currentImagePreview');
+            if (imagen) {
+                preview.innerHTML = `
+                    <div class="current-image">
+                        <img src="http://localhost:5000/uploads/${imagen}" alt="Imagen actual" class="current-image-preview">
+                        <p class="text-sm text-muted">Imagen actual</p>
+                    </div>
+                `;
+            } else {
+                preview.innerHTML = '<p class="text-sm text-muted">Sin imagen actual</p>';
+            }
+        }
+
+        function displayEditAttendees(attendees) {
+            const container = document.getElementById('editAttendeesList');
+            const count = document.getElementById('editAttendeesCount');
+            
+            count.textContent = attendees.length;
+            
+            if (attendees.length === 0) {
+                container.innerHTML = '<p class="text-muted">No hay asistentes inscritos</p>';
+                return;
+            }
+            
+            container.innerHTML = attendees.map(attendee => `
+                <div class="edit-attendee-item" data-attendee-id="${attendee._id}">
+                    <img src="${attendee.avatar ? `http://localhost:5000/uploads/${attendee.avatar}` : API.Utils.getDefaultAvatar(attendee.nombre)}" 
+                         alt="${attendee.nombre}" class="attendee-avatar-small">
+                    <div class="attendee-info-small">
+                        <h5>${attendee.nombreHeroe || attendee.nombre}</h5>
+                        <p>${attendee.clase} • Lv. ${attendee.nivel}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showEditTrainingModal() {
+            const modal = document.getElementById('editTrainingModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditTrainingModal() {
+            const modal = document.getElementById('editTrainingModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            currentEditingTraining = null;
+            attendeesToRemove = [];
+        }
+
+        async function saveTrainingChanges() {
+            if (!currentEditingTraining) return;
+            
+            try {
+                const formData = new FormData(document.getElementById('editTrainingForm'));
+                
+                const trainingData = {
+                    titulo: formData.get('titulo'),
+                    tipo: formData.get('tipo'),
+                    descripcion: formData.get('descripcion'),
+                    ubicacion: formData.get('ubicacion'),
+                    duracion: parseInt(formData.get('duracion')),
+                    fechaHora: new Date(formData.get('fechaHora')).toISOString(),
+                    nivelRequerido: parseInt(formData.get('nivelRequerido')),
+                    dificultad: formData.get('dificultad'),
+                    capacidadMaxima: parseInt(formData.get('capacidadMaxima')),
+                    recompensas: {
+                        experiencia: parseInt(formData.get('experiencia')) || 0,
+                        puntos: parseInt(formData.get('puntos')) || 0
+                    }
+                };
+
+                const imageFile = formData.get('imagen');
+                if (imageFile && imageFile.size > 0) {
+                    trainingData.imagen = imageFile;
+                }
+
+                console.log('Enviando datos de actualización:', trainingData);
+                console.log('ID del entrenamiento:', currentEditingTraining);
+
+                const response = await API.Training.update(currentEditingTraining, trainingData);
+                
+                if (response.success) {
+                    API.showToast('Entrenamiento actualizado exitosamente', 'success');
+                    closeEditTrainingModal();
+                    loadTrainings(currentPage);
+                } else {
+                    API.showToast('Error al actualizar el entrenamiento', 'error');
+                }
+            } catch (error) {
+                console.error('Error guardando cambios:', error);
+                API.showToast('Error al guardar los cambios: ' + error.message, 'error');
+            }
+        }
+
+        function showRemoveAttendeeModal() {
+            const modal = document.getElementById('removeAttendeeModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            populateRemoveAttendeesList();
+        }
+
+        function closeRemoveAttendeeModal() {
+            const modal = document.getElementById('removeAttendeeModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            attendeesToRemove = [];
+        }
+
+        function populateRemoveAttendeesList() {
+            const container = document.getElementById('removeAttendeesList');
+            const attendees = Array.from(document.querySelectorAll('.edit-attendee-item'));
+            
+            if (attendees.length === 0) {
+                container.innerHTML = '<p class="text-muted">No hay asistentes para eliminar</p>';
+                return;
+            }
+            
+            container.innerHTML = attendees.map((item, index) => {
+                const name = item.querySelector('h5').textContent;
+                const info = item.querySelector('p').textContent;
+                const avatar = item.querySelector('img').src;
+                
+                return `
+                    <div class="remove-attendee-item">
+                        <input type="checkbox" id="removeAttendee${index}" value="${index}" onchange="toggleAttendeeRemoval(${index})">
+                        <label for="removeAttendee${index}" class="remove-attendee-label">
+                            <img src="${avatar}" alt="${name}" class="attendee-avatar-small">
+                            <div>
+                                <h5>${name}</h5>
+                                <p>${info}</p>
+                            </div>
+                        </label>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleAttendeeRemoval(index) {
+            const checkbox = document.getElementById(`removeAttendee${index}`);
+            if (checkbox.checked) {
+                attendeesToRemove.push(index);
+            } else {
+                attendeesToRemove = attendeesToRemove.filter(i => i !== index);
+            }
+        }
+
+        async function confirmRemoveAttendees() {
+            if (attendeesToRemove.length === 0) {
+                API.showToast('Selecciona al menos un asistente para eliminar', 'warning');
+                return;
+            }
+            
+            const confirmed = await API.showConfirmModal(`¿Estás seguro de eliminar ${attendeesToRemove.length} asistente(s)?`);
+            if (!confirmed) return;
+            
+            try {
+                const attendees = Array.from(document.querySelectorAll('.edit-attendee-item'));
+                const attendeesToRemoveIds = attendeesToRemove.map(index => {
+                    const attendeeItem = attendees[index];
+                    return attendeeItem.dataset.attendeeId;
+                }).filter(id => id); // Filtrar IDs válidos
+                
+                console.log('Eliminando asistentes con IDs:', attendeesToRemoveIds);
+                
+                const response = await API.Training.removeAttendees(currentEditingTraining, attendeesToRemoveIds);
+                
+                if (response.success) {
+                    API.showToast('Asistentes eliminados exitosamente', 'success');
+                    closeRemoveAttendeeModal();
+                    loadTrainingForEdit(currentEditingTraining);
+                } else {
+                    API.showToast('Error al eliminar asistentes', 'error');
+                }
+            } catch (error) {
+                console.error('Error eliminando asistentes:', error);
+                API.showToast('Error al eliminar asistentes: ' + error.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 Dashboard - Academia U.A.</title>
+    
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    
+    <link rel="icon" href="../assets/gif almyght.gif">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="dashboard.html" class="navbar-brand">
+                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
+                </a>
+                
+                
+                <ul class="navbar-nav hidden md:flex">
+                    <li><a href="dashboard.html" class="navbar-link active">Dashboard</a></li>
+                    <li><a href="trainings.html" class="navbar-link">Entrenamientos</a></li>
+                    <li><a href="ranking.html" class="navbar-link">Ranking</a></li>
+                    <li class="admin-only" style="display: none;"><a href="admin.html" class="navbar-link">Admin</a></li>
+                    <li><a href="profile.html" class="navbar-link">Mi Perfil</a></li>
+                </ul>
+                
+                
+                <div class="flex items-center gap-4">
+                    <div class="user-info hidden md:flex items-center gap-2">
+                        <img src="" alt="Avatar" class="user-avatar w-8 h-8 rounded-full border-2 border-deku-green">
+                        <span class="user-name text-sm font-medium">Cargando...</span>
+                        <span class="badge badge-primary user-level">Lv. --</span>
+                    </div>
+                    
+                    <button onclick="logout()" class="btn btn-ghost btn-sm">
+                        🚪 Salir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="container py-8">
+        
+        <div class="welcome-section mb-8">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">
+                        ¡Bienvenido de vuelta, <span class="user-name text-deku-green">Héroe</span>! 
+                        <span class="wave">👋</span>
+                    </h1>
+                    <p class="text-secondary">
+                        ¿Listo para otro día de entrenamiento heroico? ¡Plus Ultra!
+                    </p>
+                </div>
+                <div class="quick-actions flex gap-2">
+                    <a href="trainings.html" class="btn btn-primary">
+                        💪 Ver Entrenamientos
+                    </a>
+                    <a href="profile.html" class="btn btn-outline">
+                        👤 Mi Perfil
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="dashboard-grid mb-8">
+            <div class="stat-card" id="levelCard">
+                <div class="stat-icon text-4xl mb-2">📈</div>
+                <div class="stat-number" id="userLevel">--</div>
+                <div class="stat-label">Nivel Actual</div>
+                <div class="stat-progress mt-2">
+                    <div class="progress">
+                        <div class="progress-bar" id="levelProgress"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card" id="pointsCard">
+                <div class="stat-icon text-4xl mb-2">⭐</div>
+                <div class="stat-number" id="userPoints">--</div>
+                <div class="stat-label">Puntos Totales</div>
+            </div>
+            
+            <div class="stat-card" id="trainingsCard">
+                <div class="stat-icon text-4xl mb-2">💪</div>
+                <div class="stat-number" id="completedTrainings">--</div>
+                <div class="stat-label">Entrenamientos Completados</div>
+            </div>
+            
+            <div class="stat-card" id="rankCard">
+                <div class="stat-icon text-4xl mb-2">🏆</div>
+                <div class="stat-number" id="userRank">--</div>
+                <div class="stat-label">Posición en Ranking</div>
+            </div>
+        </div>
+
+        
+        <div class="mb-8">
+            <div class="card card-deku" id="quirkCard">
+                <div class="card-header">
+                    <h3 class="card-title">⚡ Tu Quirk</h3>
+                </div>
+                <div class="card-body">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                        <div class="quirk-info text-center md:text-left">
+                            <h4 class="text-xl font-bold mb-1" id="quirkName">Cargando...</h4>
+                            <span class="quirk-badge" id="quirkType">Tipo</span>
+                        </div>
+                        <div class="quirk-description md:col-span-2">
+                            <p class="text-secondary" id="quirkDescription">Cargando descripción...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="mb-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📊 Estadísticas de Habilidades</h3>
+                </div>
+                <div class="card-body">
+                    <div class="stats-grid" id="abilitiesStats">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="mb-8">
+            <div class="card">
+                <div class="card-header flex items-center justify-between">
+                    <h3 class="card-title">📅 Próximos Entrenamientos</h3>
+                    <a href="trainings.html" class="btn btn-sm btn-outline">Ver Todos</a>
+                </div>
+                <div class="card-body">
+                    <div id="upcomingTrainings" class="space-y-4">
+                        
+                        <div class="loading-state text-center py-8">
+                            <div class="spinner mx-auto mb-4"></div>
+                            <p class="text-muted">Cargando entrenamientos...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="mb-8">
+            <div class="card">
+                <div class="card-header flex items-center justify-between">
+                    <h3 class="card-title">🏆 Top 5 - Ranking de Héroes</h3>
+                    <a href="ranking.html" class="btn btn-sm btn-outline">Ver Ranking Completo</a>
+                </div>
+                <div class="card-body">
+                    <div id="topRanking">
+                        
+                        <div class="loading-state text-center py-8">
+                            <div class="spinner mx-auto mb-4"></div>
+                            <p class="text-muted">Cargando ranking...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="mb-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Actividad Reciente</h3>
+                </div>
+                <div class="card-body">
+                    <div id="recentActivity" class="space-y-3">
+                        <div class="activity-item flex items-center gap-3 p-3 rounded-lg bg-tertiary">
+                            <div class="activity-icon w-8 h-8 rounded-full bg-deku flex items-center justify-center text-white text-sm">
+                                🎯
+                            </div>
+                            <div class="activity-content">
+                                <p class="font-medium">Te uniste a la Academia U.A.</p>
+                                <p class="text-sm text-muted">¡Bienvenido a tu nueva aventura heroica!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <script src="../utils/api.js"></script>
+    <script src="../js/main.js"></script>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+        });
+
+        async function loadDashboardData() {
+            try {
+                
+                await loadUserProfile();
+                
+                
+                await loadUpcomingTrainings();
+                
+                
+                await loadTopRanking();
+                
+            } catch (error) {
+                console.error('Error cargando dashboard:', error);
+                API.showToast('Error al cargar los datos del dashboard', 'error');
+            }
+        }
+
+        async function loadUserProfile() {
+            try {
+                const response = await API.Auth.getProfile();
+                console.log('Respuesta del perfil:', response);
+                
+                if (response.success && response.data) {
+                    const user = response.data;
+                    console.log('Datos del usuario:', user);
+                    
+                    
+                    window.currentUser = user;
+                    
+                    
+                    if (user.rol === 'profesor' || user.rol === 'admin') {
+                        document.querySelectorAll('.admin-only').forEach(el => {
+                            el.style.display = '';
+                        });
+                    }
+                    
+                    
+                    updateUserStats(user);
+                    updateQuirkInfo(user.quirk);
+                    updateAbilitiesStats(user.estadisticas);
+                } else {
+                    console.error('No se recibieron datos del usuario');
+                    API.showToast('Error al cargar los datos del perfil', 'error');
+                }
+            } catch (error) {
+                console.error('Error cargando perfil:', error);
+                API.showToast('Error al cargar los datos del perfil: ' + error.message, 'error');
+            }
+        }
+
+        function updateUserStats(user) {
+            
+            document.getElementById('userLevel').textContent = user.nivel;
+            document.getElementById('userPoints').textContent = user.puntuacion.toLocaleString();
+            document.getElementById('completedTrainings').textContent = user.entrenamientosAsistidos?.length || 0;
+            
+            
+            const userLevels = document.querySelectorAll('.user-level');
+            userLevels.forEach(level => {
+                level.textContent = `Lv. ${user.nivel}`;
+            });
+            
+            
+            const levelProgress = ((user.puntuacion % 100) / 100) * 100;
+            document.getElementById('levelProgress').style.width = levelProgress + '%';
+            
+            
+            document.getElementById('userRank').textContent = '#?';
+        }
+
+        function updateQuirkInfo(quirk) {
+            if (quirk && quirk.nombre && quirk.descripcion && quirk.tipo) {
+                document.getElementById('quirkName').textContent = quirk.nombre;
+                document.getElementById('quirkDescription').textContent = quirk.descripcion;
+                
+                const quirkTypeElement = document.getElementById('quirkType');
+                quirkTypeElement.textContent = quirk.tipo.charAt(0).toUpperCase() + quirk.tipo.slice(1);
+                quirkTypeElement.className = `quirk-badge quirk-${quirk.tipo}`;
+            } else {
+                console.error('Datos de quirk incompletos:', quirk);
+                document.getElementById('quirkName').textContent = 'Quirk no definido';
+                document.getElementById('quirkDescription').textContent = 'No hay descripción disponible';
+            }
+        }
+
+        function updateAbilitiesStats(stats) {
+            const container = document.getElementById('abilitiesStats');
+            
+            if (!stats) {
+                console.error('No se recibieron estadísticas');
+                stats = {
+                    fuerza: 1,
+                    velocidad: 1,
+                    tecnica: 1,
+                    inteligencia: 1,
+                    cooperacion: 1
+                };
+            }
+            
+            const abilities = [
+                { key: 'fuerza', label: 'Fuerza', icon: '💪', color: '#ef4444' },
+                { key: 'velocidad', label: 'Velocidad', icon: '💨', color: '#3b82f6' },
+                { key: 'tecnica', label: 'Técnica', icon: '🎯', color: '#a855f7' },
+                { key: 'inteligencia', label: 'Inteligencia', icon: '🧠', color: '#06b6d4' },
+                { key: 'cooperacion', label: 'Cooperación', icon: '🤝', color: '#22c55e' }
+            ];
+
+            container.innerHTML = abilities.map(ability => `
+                <div class="stat-item text-center">
+                    <div class="stat-circle ${ability.key}" style="background: linear-gradient(135deg, ${ability.color}, ${ability.color}99)">
+                        ${stats[ability.key] || 1}
+                    </div>
+                    <div class="stat-label">${ability.label}</div>
+                </div>
+            `).join('');
+        }
+
+        async function loadUpcomingTrainings() {
+            try {
+                const response = await API.Training.getAll({ 
+                    limit: 3, 
+                    ordenPor: 'fechaHora',
+                    orden: 'asc' 
+                });
+                
+                if (response.success) {
+                    displayUpcomingTrainings(response.data.entrenamientos);
+                }
+            } catch (error) {
+                console.error('Error cargando entrenamientos:', error);
+                document.getElementById('upcomingTrainings').innerHTML = `
+                    <div class="text-center py-8 text-muted">
+                        <p>No se pudieron cargar los entrenamientos</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayUpcomingTrainings(trainings) {
+            const container = document.getElementById('upcomingTrainings');
+            
+            if (trainings.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-muted">
+                        <div class="text-4xl mb-2">🎯</div>
+                        <p>No hay entrenamientos próximos</p>
+                        <a href="trainings.html" class="btn btn-primary btn-sm mt-4">Explorar Entrenamientos</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = trainings.map(training => `
+                <div class="training-preview p-4 rounded-lg bg-secondary border border-primary hover:border-deku-green transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <h4 class="font-semibold mb-1">${training.titulo}</h4>
+                            <p class="text-sm text-muted mb-2">${training.descripcion.substring(0, 100)}...</p>
+                            <div class="flex items-center gap-4 text-xs text-secondary">
+                                <span>📅 ${API.Utils.formatRelativeDate(training.fechaHora)}</span>
+                                <span>📍 ${training.ubicacion}</span>
+                                <span>⏱️ ${API.Utils.formatDuration(training.duracion)}</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="training-type ${training.tipo} text-xs px-2 py-1 rounded">${training.tipo}</span>
+                            <p class="text-sm text-muted mt-1">${training.numeroParticipantes}/${training.capacidadMaxima}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadTopRanking() {
+            try {
+                const response = await API.Auth.getRanking(5);
+                
+                if (response.success) {
+                    displayTopRanking(response.data);
+                }
+            } catch (error) {
+                console.error('Error cargando ranking:', error);
+                document.getElementById('topRanking').innerHTML = `
+                    <div class="text-center py-8 text-muted">
+                        <p>No se pudo cargar el ranking</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayTopRanking(ranking) {
+            const container = document.getElementById('topRanking');
+            
+            if (ranking.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-muted">
+                        <p>No hay datos de ranking disponibles</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = ranking.map((student, index) => `
+                <div class="ranking-row" style="grid-template-columns: auto 1fr auto auto;">
+                    <div class="rank-position">#${index + 1}</div>
+                    <div class="rank-student">
+                        <img src="${student.avatar ? `http://localhost:5000/uploads/${student.avatar}` : API.Utils.getDefaultAvatar(student.nombre)}" 
+                             alt="${student.nombre}" class="rank-avatar">
+                        <div class="rank-info">
+                            <h4>${student.nombreHeroe || student.nombre}</h4>
+                            <p class="rank-class">${student.clase}</p>
+                        </div>
+                    </div>
+                    <div class="rank-level">Lv. ${student.nivel}</div>
+                    <div class="rank-points">${student.puntuacion.toLocaleString()} pts</div>
+                </div>
+            `).join('');
+            
+            
+            const currentUser = window.currentUser;
+            if (currentUser) {
+                const userPosition = ranking.findIndex(student => student._id === currentUser._id);
+                if (userPosition !== -1) {
+                    document.getElementById('userRank').textContent = `#${userPosition + 1}`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

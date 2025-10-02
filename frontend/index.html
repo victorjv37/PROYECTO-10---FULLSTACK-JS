@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦸‍♂️ Academia de Héroes U.A. - Bienvenido</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="./assets/gif almyght.gif">
+    <audio id="mainTheme" preload="auto" loop>
+        <source src="" type="audio/mpeg">
+        <source src="" type="audio/ogg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    <meta name="description" content="Academia de Héroes U.A. - Entrena como un verdadero héroe con Deku y sus compañeros">
+    <meta name="keywords" content="heroes, academia, entrenamiento, quirks, my hero academia">
+    <meta name="author" content="Academia U.A.">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                
+                <div class="navbar-brand">
+                    <img src="./assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
+                </div>
+                
+                <ul class="navbar-nav hidden md:flex">
+                    <li><a href="#inicio" class="navbar-link active" data-tab="inicio">Inicio</a></li>
+                    <li><a href="#about" class="navbar-link" data-tab="about">Acerca de</a></li>
+                    <li><a href="#features" class="navbar-link" data-tab="features">Características</a></li>
+                    <li><a href="#classes" class="navbar-link" data-tab="classes">Clases</a></li>
+                </ul>
+                
+                <div class="flex items-center gap-4">
+                    <div class="audio-controls hidden md:flex items-center gap-2">
+                        <button id="playPauseBtn" class="btn btn-ghost btn-sm" title="Reproducir/Pausar música">
+                            <span id="playIcon">🎵</span>
+                        </button>
+                        <button id="volumeBtn" class="btn btn-ghost btn-sm" title="Silenciar/Activar sonido">
+                            <span id="volumeIcon">🔊</span>
+                        </button>
+                    </div>
+                    
+                    <a href="pages/login.html" class="btn btn-ghost btn-sm">Iniciar Sesión</a>
+                    <a href="pages/register.html" class="btn btn-primary btn-sm">Registrarse</a>
+                </div>
+                
+                <button class="mobile-menu-toggle md:hidden">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+            
+            <div class="mobile-menu">
+                <ul class="navbar-nav">
+                    <li><a href="#inicio" class="navbar-link" data-tab="inicio">Inicio</a></li>
+                    <li><a href="#about" class="navbar-link" data-tab="about">Acerca de</a></li>
+                    <li><a href="#features" class="navbar-link" data-tab="features">Características</a></li>
+                    <li><a href="#classes" class="navbar-link" data-tab="classes">Clases</a></li>
+                    <li><a href="pages/login.html" class="navbar-link">Iniciar Sesión</a></li>
+                    <li><a href="pages/register.html" class="navbar-link">Registrarse</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <section id="inicio" class="tab-content active">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    ¡Bienvenido a la<br>
+                    <span class="text-gradient-deku">Academia de Héroes U.A.</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Entrena junto a Deku, Bakugo, Todoroki y los mejores estudiantes de héroes. 
+                    Desarrolla tu Quirk, mejora tus estadísticas y conviértete en el próximo 
+                    Symbol of Peace.
+                </p>
+                
+                <div class="hero-actions flex flex-col sm:flex-row gap-4 items-center justify-center">
+                    <a href="pages/register.html" class="btn btn-primary btn-lg">
+                        🚀 Comenzar Entrenamiento
+                    </a>
+                    <a href="#about" class="btn btn-ghost btn-lg">
+                        📖 Conocer Más
+                    </a>
+                </div>
+                
+                <div class="hero-stats grid grid-cols-3 gap-3 mt-6 max-w-sm mx-auto">
+                    <div class="stat-item text-center">
+                        <div class="stat-number text-deku-green glow-deku">500+</div>
+                        <div class="stat-label">Estudiantes</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="stat-number text-ofa-blue glow-ofa">50+</div>
+                        <div class="stat-label">Entrenamientos</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="stat-number text-deku-green glow-deku">100%</div>
+                        <div class="stat-label">Plus Ultra</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-particles">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+        </div>
+        </section>
+
+        <section id="about" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">¿Qué es la Academia U.A.?</h2>
+                <p class="section-description">
+                    La Universidad de Héroes (U.A.) es la academia más prestigiosa para entrenar 
+                    a la próxima generación de héroes profesionales. Aquí desarrollarás tu Quirk 
+                    y aprenderás a usarlo para proteger a la sociedad.
+                </p>
+            </div>
+            
+            <div class="about-cards">
+                <div class="about-card card card-deku">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">Desarrollo de Quirks</h3>
+                    <p class="text-secondary">
+                        Mejora y perfecciona tu Quirk único con entrenamientos especializados 
+                        diseñados por los mejores profesores.
+                    </p>
+                </div>
+                
+                <div class="about-card card card-ofa">
+                    <div class="card-icon">⚔️</div>
+                    <h3 class="card-title">Combate Heroico</h3>
+                    <p class="text-secondary">
+                        Aprende técnicas de combate y estrategias de equipo para enfrentar 
+                        villanos y proteger a los civiles.
+                    </p>
+                </div>
+                
+                <div class="about-card card card-deku">
+                    <div class="card-icon">🚑</div>
+                    <h3 class="card-title">Misiones de Rescate</h3>
+                    <p class="text-secondary">
+                        Participa en simulacros de rescate y situaciones de emergencia 
+                        para salvar vidas como un verdadero héroe.
+                    </p>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section id="features" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Características de la Academia</h2>
+                <p class="section-description">
+                    Experimenta un sistema de entrenamiento completo que te ayudará a 
+                    convertirte en el héroe que el mundo necesita.
+                </p>
+            </div>
+            
+            <div class="features-compact-grid">
+                <div class="feature-card card card-deku">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="card-title">Sistema de Niveles</h3>
+                    <p class="text-secondary">Mejora fuerza, velocidad, técnica e inteligencia con cada entrenamiento.</p>
+                </div>
+                
+                <div class="feature-card card card-ofa">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="card-title">Quirks Únicos</h3>
+                    <p class="text-secondary">Crea tu Quirk personalizado: Emisión, Transformación o Mutación.</p>
+                </div>
+                
+                <div class="feature-card card card-deku">
+                    <div class="feature-icon">💪</div>
+                    <h3 class="card-title">Entrenamientos</h3>
+                    <p class="text-secondary">Combate, rescate, desarrollo de quirks y trabajo en equipo.</p>
+                </div>
+                
+                <div class="feature-card card card-ofa">
+                    <div class="feature-icon">🏆</div>
+                    <h3 class="card-title">Ranking Global</h3>
+                    <p class="text-secondary">Compite y sube posiciones. ¿Alcanzarás el #1 como Deku?</p>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section id="classes" class="tab-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Clases Disponibles</h2>
+                <p class="section-description">
+                    Únete a una de nuestras prestigiosas clases y entrena junto a 
+                    los futuros héroes profesionales.
+                </p>
+            </div>
+            
+            <div class="classes-grid">
+                <div class="class-card card card-deku">
+                    <h3 class="card-title">Clase 1-A</h3>
+                    <p class="text-secondary mb-4">
+                        La clase élite con Deku, Bakugo, Todoroki y los mejores estudiantes.
+                    </p>
+                    <div class="class-students">
+                        <span class="badge badge-primary">20 estudiantes</span>
+                    </div>
+                </div>
+                
+                <div class="class-card card card-ofa">
+                    <h3 class="card-title">Clase 1-B</h3>
+                    <p class="text-secondary mb-4">
+                        Clase competitiva con estudiantes igualmente talentosos.
+                    </p>
+                    <div class="class-students">
+                        <span class="badge badge-secondary">20 estudiantes</span>
+                    </div>
+                </div>
+                
+                <div class="class-card card card-deku">
+                    <h3 class="card-title">Clases Superiores</h3>
+                    <p class="text-secondary mb-4">
+                        Para estudiantes avanzados de segundo y tercer año.
+                    </p>
+                    <div class="class-students">
+                        <span class="badge badge-warning">Disponible pronto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+
+
+    </main>
+
+    <footer class="footer-sticky">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <span class="footer-brand">🦸‍♂️ U.A. HIGH SCHOOL</span>
+                    <span class="footer-separator">|</span>
+                    <span class="footer-contact">📧 info@ua-academy.com</span>
+                    <span class="footer-separator">|</span>
+                    <span class="footer-phone">📞 +1 (555) HERO-123</span>
+                </div>
+                <div class="footer-copyright">
+                    © 2024 Academia U.A. - Plus Ultra! 💪
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="utils/api.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        class AudioManager {
+            constructor() {
+                this.audio = document.getElementById('mainTheme');
+                this.playPauseBtn = document.getElementById('playPauseBtn');
+                this.volumeBtn = document.getElementById('volumeBtn');
+                this.playIcon = document.getElementById('playIcon');
+                this.volumeIcon = document.getElementById('volumeIcon');
+                
+                this.isFirstVisit = !localStorage.getItem('ua_theme_played');
+                this.isPlaying = false;
+                this.isMuted = false;
+                this.volume = 0.3; 
+                
+                this.init();
+            }
+            
+            init() {
+                this.audio.volume = this.volume;
+                
+                this.playPauseBtn.addEventListener('click', () => this.togglePlayPause());
+                this.volumeBtn.addEventListener('click', () => this.toggleMute());
+                
+                this.audio.addEventListener('play', () => this.updatePlayButton(true));
+                this.audio.addEventListener('pause', () => this.updatePlayButton(false));
+                this.audio.addEventListener('ended', () => this.updatePlayButton(false));
+                
+                this.playTheme();
+            }
+            
+            async playTheme() {
+                try {
+                    const audioUrl = './assets/audio/My Hero Academia - You Can Become A Hero - Main Theme [d1YMyrm_T1M].mp3';
+                    
+                    if (audioUrl === 'TU_URL_AQUI') {
+                        console.log('🎵 Por favor, configura la URL del audio en el código');
+                        this.showAudioInstructions();
+                        return;
+                    }
+                    
+                    this.showLoadingState();
+                    
+                    this.audio.querySelector('source[type="audio/mpeg"]').src = audioUrl;
+                    this.audio.querySelector('source[type="audio/ogg"]').src = audioUrl.replace('.mp3', '.ogg');
+                    
+                    await this.audio.load();
+                    await this.audio.play();
+                    
+                    this.showAudioNotification('🎵 ¡Tema principal de My Hero Academia iniciado!');
+                    
+                    console.log('🎵 ¡Tema principal de My Hero Academia iniciado!');
+                } catch (error) {
+                    console.log('🎵 Error reproduciendo el tema:', error);
+                    
+                    if (error.name === 'NotAllowedError') {
+                        this.showAudioNotification('🎵 Haz clic en el botón de música para reproducir', 'info');
+                        console.log('🎵 Reproducción bloqueada por el navegador. Usa los controles manuales.');
+                    } else {
+                        this.showAudioNotification('🎵 Error cargando el tema musical', 'error');
+                    }
+                    
+                    this.playIcon.textContent = '🎵';
+                    this.playPauseBtn.classList.remove('loading');
+                }
+            }
+            
+            showLoadingState() {
+                this.playIcon.textContent = '⏳';
+                this.playPauseBtn.classList.add('loading');
+            }
+            
+            showAudioInstructions() {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--deku-green-primary);
+                    color: white;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                    z-index: 1000;
+                    max-width: 300px;
+                    font-size: 0.9rem;
+                `;
+                notification.innerHTML = `
+                    <strong>🎵 Configuración de Audio</strong><br>
+                    Para activar el tema musical, edita el archivo index.html y cambia 'TU_URL_AQUI' por la URL de tu archivo MP3.
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 5000);
+            }
+            
+            showAudioNotification(message, type = 'success') {
+                if (window.API && window.API.showToast) {
+                    window.API.showToast(message, type);
+                } else {
+                    console.log(message);
+                }
+            }
+            
+            togglePlayPause() {
+                if (this.isPlaying) {
+                    this.audio.pause();
+                } else {
+                    if (!this.audio.src) {
+                        this.loadAudio();
+                    }
+                    
+                    this.audio.play().catch(error => {
+                        console.log('🎵 Error al reproducir:', error);
+                        this.showAudioNotification('🎵 Error al reproducir el audio', 'error');
+                    });
+                }
+            }
+            
+            loadAudio() {
+                const audioUrl = './assets/audio/My Hero Academia - You Can Become A Hero - Main Theme [d1YMyrm_T1M].mp3';
+                this.audio.querySelector('source[type="audio/mpeg"]').src = audioUrl;
+                this.audio.load();
+            }
+            
+            toggleMute() {
+                this.isMuted = !this.isMuted;
+                this.audio.muted = this.isMuted;
+                this.updateVolumeButton();
+            }
+            
+            updatePlayButton(playing) {
+                this.isPlaying = playing;
+                this.playIcon.textContent = playing ? '⏸️' : '🎵';
+                this.playPauseBtn.title = playing ? 'Pausar música' : 'Reproducir música';
+            }
+            
+            updateVolumeButton() {
+                this.volumeIcon.textContent = this.isMuted ? '🔇' : '🔊';
+                this.volumeBtn.title = this.isMuted ? 'Activar sonido' : 'Silenciar';
+            }
+        }
+        
+    </script>
+    
+    <script src="js/main.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                if (window.audioManager) {
+                    console.log("🎵 AudioManager ya inicializado desde main.js");
+                } else {
+                    console.log("🎵 Inicializando AudioManager...");
+                    window.audioManager = new AudioManager();
+                }
+                
+                window.resetAudio = function() {
+                    localStorage.removeItem('ua_theme_played');
+                    location.reload();
+                };
+                
+                window.playTheme = function() {
+                    if (window.audioManager) {
+                        window.audioManager.playTheme();
+                    }
+                };
+                
+                window.loadAudio = function() {
+                    if (window.audioManager) {
+                        window.audioManager.loadAudio();
+                    }
+                };
+            }, 100);
+        });
+    </script>
+    
+</body>
+</html>

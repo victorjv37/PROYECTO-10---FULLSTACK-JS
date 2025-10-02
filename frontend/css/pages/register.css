@@ -1,0 +1,56 @@
+.register-compact .form-group {
+  margin-bottom: var(--space-3);
+}
+
+.register-compact .form-label {
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-1);
+}
+
+.register-compact .form-input,
+.register-compact .form-select,
+.register-compact .form-textarea {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.register-compact .form-textarea {
+  min-height: 80px;
+}
+
+.register-compact .btn {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.register-compact .progress-steps {
+  margin-bottom: var(--space-3);
+}
+
+.register-compact .step-label {
+  font-size: var(--font-size-xs);
+}
+
+.register-compact .step-circle {
+  width: 24px;
+  height: 24px;
+  font-size: var(--font-size-xs);
+}
+
+.register-compact .text-muted {
+  font-size: var(--font-size-xs);
+  margin-top: var(--space-1);
+}
+
+.register-compact .small {
+  font-size: var(--font-size-xs);
+}
+
+.register-compact .checkbox-container {
+  margin-top: var(--space-2);
+}
+
+.register-compact .checkbox-container label {
+  font-size: var(--font-size-xs);
+  line-height: 1.3;
+}

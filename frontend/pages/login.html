@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔑 Iniciar Sesión - Academia U.A.</title>
+    
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    
+    <link rel="icon" href="../assets/gif almyght.gif">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="navbar-brand">
+                    🦸‍♂️ U.A. HIGH SCHOOL
+                </a>
+                
+                <div class="flex items-center gap-4">
+                    <a href="../index.html" class="navbar-link">Volver al Inicio</a>
+                    <a href="register.html" class="btn btn-outline btn-sm">Registrarse</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="login-main">
+        <div class="login-container">
+            
+            <div class="login-header">
+            
+                <h1 class="login-title">¡Bienvenido de vuelta!</h1>
+                <p class="login-description">
+                    Inicia sesión para continuar tu entrenamiento en la Academia U.A.
+                </p>
+            </div>
+
+            
+            <div class="login-content">
+                
+                <div class="login-form-card">
+                    <form id="loginForm" class="login-form">
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                📧 Correo Electrónico
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                placeholder="tu.email@ua.edu"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                🔒 Contraseña
+                            </label>
+                            <div class="password-input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-input" 
+                                    placeholder="Tu contraseña secreta"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <button 
+                                    type="button" 
+                                    id="togglePassword" 
+                                    class="password-toggle"
+                                >
+                                    👁️
+                                </button>
+                            </div>
+                        </div>
+
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="form-check">
+                                <input type="checkbox" id="remember" class="form-checkbox">
+                                <label for="remember" class="form-check-label">Recordar sesión</label>
+                            </div>
+                            
+                            <a href="#" class="text-sm text-deku hover:color-deku-light">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+
+                        
+                        <button type="submit" class="btn btn-primary btn-full btn-lg" id="loginBtn">
+                            <span class="login-text">🚀 Iniciar Sesión</span>
+                            <span class="login-loading hidden">
+                                <div class="spinner w-5 h-5"></div>
+                                Verificando...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                
+                <div class="login-test-accounts">
+                    <h3 class="test-accounts-title">🧪 Cuentas de Prueba</h3>
+                    <div class="test-account-list">
+                        <button 
+                            class="quick-login"
+                            data-email="midoriya@ua.edu"
+                            data-password="123456"
+                        >
+                            <div class="quick-login-content">
+                                <div class="quick-login-avatar bg-deku">
+                                    D
+                                </div>
+                                <div class="quick-login-info">
+                                    <h4>Izuku Midoriya (Deku)</h4>
+                                    <p>Estudiante - Clase 1-A</p>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button 
+                            class="quick-login"
+                            data-email="allmight@ua.edu"
+                            data-password="123456"
+                        >
+                            <div class="quick-login-content">
+                                <div class="quick-login-avatar bg-ofa">
+                                    A
+                                </div>
+                                <div class="quick-login-info">
+                                    <h4>All Might</h4>
+                                    <p>Profesor - Symbol of Peace</p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="login-footer">
+                <p>
+                    ¿Nuevo en la Academia U.A.? 
+                    <a href="register.html">
+                        Regístrate aquí
+                    </a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    
+    <script src="../utils/api.js"></script>
+    <script src="../js/main.js"></script>
+    
+    
+    <script>
+        
+        async function handleLogin(credentials) {
+            const loginBtn = document.getElementById('loginBtn');
+            
+            try {
+                
+                setLoadingState(true);
+
+                
+                const response = await API.Auth.login(credentials);
+
+                if (response.success) {
+                    API.showToast(response.message, 'success');
+                    
+                    
+                    setTimeout(() => {
+                        API.redirectToDashboard();
+                    }, 1000);
+                } else {
+                    API.showToast(response.message || 'Error al iniciar sesión', 'error');
+                }
+
+            } catch (error) {
+                console.error('Error en login:', error);
+                API.showToast('Error al conectar con el servidor', 'error');
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        
+        function setLoadingState(isLoading) {
+            const loginBtn = document.getElementById('loginBtn');
+            const loginText = loginBtn.querySelector('.login-text');
+            const loginLoading = loginBtn.querySelector('.login-loading');
+            
+            if (isLoading) {
+                loginText.classList.add('hidden');
+                loginLoading.classList.remove('hidden');
+                loginBtn.disabled = true;
+            } else {
+                loginText.classList.remove('hidden');
+                loginLoading.classList.add('hidden');
+                loginBtn.disabled = false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const quickLoginBtns = document.querySelectorAll('.quick-login');
+
+            
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? '👁️' : '🙈';
+            });
+
+            
+            quickLoginBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const email = this.getAttribute('data-email');
+                    const password = this.getAttribute('data-password');
+                    
+                    
+                    document.getElementById('email').value = email;
+                    document.getElementById('password').value = password;
+                    
+                    
+                    handleLogin({ email, password });
+                });
+            });
+
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!API.validateForm(this)) {
+                    return;
+                }
+
+                const formData = new FormData(this);
+                const credentials = {
+                    email: formData.get('email'),
+                    password: formData.get('password')
+                };
+
+                handleLogin(credentials);
+            });
+
+
+            
+            document.getElementById('email').focus();
+        });
+    </script>
+
+</body>
+</html>

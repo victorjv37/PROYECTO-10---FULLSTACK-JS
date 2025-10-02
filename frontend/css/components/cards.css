@@ -1,0 +1,120 @@
+.card {
+  margin: 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.card-header {
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.card-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.card-footer {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-deku);
+}
+
+.card-deku {
+  border-color: var(--color-deku);
+}
+
+.card-deku::before {
+  background: var(--gradient-deku);
+}
+
+.card-deku:hover {
+  border-color: var(--color-deku-light);
+  box-shadow: var(--shadow-deku);
+}
+
+.card-ofa {
+  border-color: var(--color-ofa);
+}
+
+.card-ofa::before {
+  background: var(--gradient-ofa);
+}
+
+.card-ofa:hover {
+  border-color: var(--color-ofa-light);
+  box-shadow: var(--shadow-ofa);
+}
+
+.stat-card {
+  text-align: center;
+  padding: var(--space-3);
+}
+
+.stat-card .stat-icon {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.stat-card .stat-number {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-deku);
+  margin-bottom: var(--space-1);
+  display: block;
+}
+
+.stat-card .stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: var(--space-4);
+  }
+  .card-title {
+    font-size: var(--font-size-base);
+  }
+}

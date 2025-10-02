@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👤 Mi Perfil - Academia U.A.</title>
+    
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages/profile.css">
+    
+    
+    <link rel="icon" href="../assets/gif almyght.gif">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="dashboard.html" class="navbar-brand">
+                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
+                </a>
+                
+                
+                <ul class="navbar-nav hidden md:flex">
+                    <li><a href="dashboard.html" class="navbar-link">Dashboard</a></li>
+                    <li><a href="trainings.html" class="navbar-link">Entrenamientos</a></li>
+                    <li><a href="ranking.html" class="navbar-link">Ranking</a></li>
+                    <li class="admin-only" style="display: none;"><a href="admin.html" class="navbar-link">Admin</a></li>
+                    <li><a href="profile.html" class="navbar-link active">Mi Perfil</a></li>
+                </ul>
+                
+                
+                <div class="flex items-center gap-4">
+                    <div class="user-info hidden md:flex items-center gap-2">
+                        <img src="" alt="Avatar" class="user-avatar w-8 h-8 rounded-full border-2 border-deku-green">
+                        <span class="user-name text-sm font-medium">Cargando...</span>
+                        <span class="badge badge-primary user-level">Lv. --</span>
+                    </div>
+                    
+                    <button onclick="logout()" class="btn btn-ghost btn-sm">
+                        🚪 Salir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="container py-8">
+        
+        <div class="profile-header mb-8">
+            <div class="card card-deku">
+                <div class="card-body">
+                    <div class="profile-hero-section">
+                        <div class="profile-avatar-section">
+                            <div class="profile-avatar-container">
+                                <img src="" alt="Avatar" id="profileAvatar" class="profile-avatar">
+                                <button onclick="document.getElementById('avatarInput').click()" class="avatar-edit-btn">
+                                    📷
+                                </button>
+                                <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
+                            </div>
+                        </div>
+                        
+                        <div class="profile-info-section">
+                            <h1 class="profile-hero-name" id="profileHeroName">---</h1>
+                            <p class="profile-real-name" id="profileRealName">---</p>
+                            <div class="profile-badges">
+                                <span class="badge badge-primary profile-class">---</span>
+                                <span class="badge badge-success profile-level-badge">---</span>
+                                <span class="badge badge-warning profile-points">--- pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="profile-tabs mb-4">
+            <button class="tab-btn active" onclick="switchTab('info')">📋 Información</button>
+            <button class="tab-btn" onclick="switchTab('quirk')">⚡ Quirk</button>
+            <button class="tab-btn" onclick="switchTab('stats')">📊 Estadísticas</button>
+            <button class="tab-btn" onclick="switchTab('trainings')">💪 Entrenamientos</button>
+        </div>
+
+        
+        <div id="tab-info" class="tab-content active">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Información Personal</h3>
+                    <button onclick="toggleEditMode()" class="btn btn-sm btn-outline" id="editBtn">✏️ Editar</button>
+                </div>
+                <div class="card-body">
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Nombre Real</label>
+                                <input type="text" id="nombreInput" class="form-input" readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Nombre de Héroe</label>
+                                <input type="text" id="nombreHeroeInput" class="form-input" readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" id="emailInput" class="form-input" readonly disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Clase</label>
+                                <input type="text" id="claseInput" class="form-input" readonly disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Nivel</label>
+                                <input type="text" id="nivelInput" class="form-input" readonly disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Puntuación</label>
+                                <input type="text" id="puntuacionInput" class="form-input" readonly disabled>
+                            </div>
+                        </div>
+                        
+                        <div id="editActions" class="form-actions" style="display: none;">
+                            <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+                            <button type="button" onclick="cancelEdit()" class="btn btn-outline">❌ Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="tab-quirk" class="tab-content">
+            <div class="card card-deku">
+                <div class="card-header">
+                    <h3 class="card-title">⚡ Tu Quirk</h3>
+                    <button onclick="toggleEditQuirk()" class="btn btn-sm btn-outline" id="editQuirkBtn">✏️ Editar</button>
+                </div>
+                <div class="card-body">
+                    <form id="quirkForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Nombre del Quirk</label>
+                                <input type="text" id="quirkNombreInput" class="form-input" readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Tipo</label>
+                                <select id="quirkTipoInput" class="form-select" disabled>
+                                    <option value="emision">Emisión</option>
+                                    <option value="transformacion">Transformación</option>
+                                    <option value="mutacion">Mutación</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label class="form-label">Descripción</label>
+                                <textarea id="quirkDescripcionInput" class="form-textarea" rows="4" readonly></textarea>
+                            </div>
+                        </div>
+                        
+                        <div id="editQuirkActions" class="form-actions" style="display: none;">
+                            <button type="submit" class="btn btn-primary">💾 Guardar Quirk</button>
+                            <button type="button" onclick="cancelEditQuirk()" class="btn btn-outline">❌ Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="tab-stats" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📊 Estadísticas de Combate</h3>
+                </div>
+                <div class="card-body">
+                    <div class="stats-display" id="statsDisplay">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="tab-trainings" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">💪 Mis Entrenamientos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="trainings-tabs mb-4">
+                        <button class="mini-tab active" onclick="switchTrainingTab('enrolled')">Inscritos</button>
+                        <button class="mini-tab" onclick="switchTrainingTab('completed')">Completados</button>
+                    </div>
+                    
+                    <div id="enrolledTrainings" class="training-list">
+                        
+                    </div>
+                    
+                    <div id="completedTrainings" class="training-list" style="display: none;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <script src="../utils/api.js"></script>
+    <script src="../js/main.js"></script>
+    
+    
+    <script>
+        let currentUserData = null;
+        let isEditMode = false;
+        let isEditQuirkMode = false;
+        let newAvatar = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfileData();
+            
+            
+            document.getElementById('profileForm').addEventListener('submit', saveProfile);
+            document.getElementById('quirkForm').addEventListener('submit', saveQuirk);
+        });
+
+        async function loadProfileData() {
+            try {
+                const response = await API.Auth.getProfile();
+                console.log('Datos del perfil:', response);
+                
+                if (response.success && response.data) {
+                    currentUserData = response.data;
+                    displayProfileData(response.data);
+                }
+            } catch (error) {
+                console.error('Error cargando perfil:', error);
+                API.showToast('Error al cargar el perfil', 'error');
+            }
+        }
+
+        function displayProfileData(user) {
+            
+            const avatar = user.avatar ? `http://localhost:5000/uploads/${user.avatar}` : API.Utils.getDefaultAvatar(user.nombre);
+            document.getElementById('profileAvatar').src = avatar;
+            document.getElementById('profileHeroName').textContent = user.nombreHeroe || user.nombre;
+            document.getElementById('profileRealName').textContent = `(${user.nombre})`;
+            document.querySelector('.profile-class').textContent = user.clase;
+            document.querySelector('.profile-level-badge').textContent = `Nivel ${user.nivel}`;
+            document.querySelector('.profile-points').textContent = `${user.puntuacion.toLocaleString()} pts`;
+            
+            
+            document.getElementById('nombreInput').value = user.nombre;
+            document.getElementById('nombreHeroeInput').value = user.nombreHeroe || '';
+            document.getElementById('emailInput').value = user.email;
+            document.getElementById('claseInput').value = user.clase;
+            document.getElementById('nivelInput').value = user.nivel;
+            document.getElementById('puntuacionInput').value = user.puntuacion.toLocaleString();
+            
+            
+            if (user.quirk) {
+                document.getElementById('quirkNombreInput').value = user.quirk.nombre;
+                document.getElementById('quirkTipoInput').value = user.quirk.tipo;
+                document.getElementById('quirkDescripcionInput').value = user.quirk.descripcion;
+            }
+            
+            
+            displayStats(user.estadisticas);
+            
+            
+            displayTrainings(user);
+        }
+
+        function displayStats(stats) {
+            const container = document.getElementById('statsDisplay');
+            const abilities = [
+                { key: 'fuerza', label: 'Fuerza', icon: '💪', color: '#ef4444' },
+                { key: 'velocidad', label: 'Velocidad', icon: '💨', color: '#3b82f6' },
+                { key: 'tecnica', label: 'Técnica', icon: '🎯', color: '#a855f7' },
+                { key: 'inteligencia', label: 'Inteligencia', icon: '🧠', color: '#06b6d4' },
+                { key: 'cooperacion', label: 'Cooperación', icon: '🤝', color: '#22c55e' }
+            ];
+
+            container.innerHTML = abilities.map(ability => {
+                const value = stats[ability.key] || 1;
+                const percentage = (value / 10) * 100;
+                
+                return `
+                    <div class="stat-row">
+                        <div class="stat-info">
+                            <span class="stat-icon">${ability.icon}</span>
+                            <span class="stat-name">${ability.label}</span>
+                        </div>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" style="width: ${percentage}%; background: ${ability.color}"></div>
+                        </div>
+                        <span class="stat-value">${value}/10</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function displayTrainings(user) {
+            
+            const enrolledContainer = document.getElementById('enrolledTrainings');
+            const enrolled = user.entrenamientosAsistidos || [];
+            
+            if (enrolled.length === 0) {
+                enrolledContainer.innerHTML = '<p class="text-muted text-center py-8">No estás inscrito en ningún entrenamiento</p>';
+            } else {
+                enrolledContainer.innerHTML = enrolled.map(t => createTrainingItem(t)).join('');
+            }
+            
+            
+            const completedContainer = document.getElementById('completedTrainings');
+            const completed = enrolled.filter(t => t.estado === 'completado');
+            
+            if (completed.length === 0) {
+                completedContainer.innerHTML = '<p class="text-muted text-center py-8">Aún no has completado ningún entrenamiento</p>';
+            } else {
+                completedContainer.innerHTML = completed.map(t => createTrainingItem(t)).join('');
+            }
+        }
+
+        function createTrainingItem(training) {
+            return `
+                <div class="training-item">
+                    <div class="training-item-icon">${getTrainingIcon(training.tipo)}</div>
+                    <div class="training-item-info">
+                        <h4 class="training-item-title">${training.titulo}</h4>
+                        <p class="training-item-meta">
+                            📅 ${API.Utils.formatDate(training.fechaHora)} • 
+                            📍 ${training.ubicacion} • 
+                            ⏱️ ${API.Utils.formatDuration(training.duracion)}
+                        </p>
+                    </div>
+                    <span class="badge badge-${training.estado === 'completado' ? 'success' : 'primary'}">
+                        ${training.estado}
+                    </span>
+                </div>
+            `;
+        }
+
+        function getTrainingIcon(tipo) {
+            const icons = {
+                'combate': '⚔️',
+                'rescate': '🚑',
+                'quirk-development': '⚡',
+                'resistencia': '🏃',
+                'estrategia': '🧠',
+                'trabajo-en-equipo': '🤝',
+                'mision-practica': '🎯'
+            };
+            return icons[tipo] || '💪';
+        }
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            
+            document.getElementById('nombreInput').readOnly = !isEditMode;
+            document.getElementById('nombreHeroeInput').readOnly = !isEditMode;
+            document.getElementById('editActions').style.display = isEditMode ? 'flex' : 'none';
+            document.getElementById('editBtn').textContent = isEditMode ? '❌ Cancelar' : '✏️ Editar';
+        }
+
+        function toggleEditQuirk() {
+            isEditQuirkMode = !isEditQuirkMode;
+            
+            document.getElementById('quirkNombreInput').readOnly = !isEditQuirkMode;
+            document.getElementById('quirkTipoInput').disabled = !isEditQuirkMode;
+            document.getElementById('quirkDescripcionInput').readOnly = !isEditQuirkMode;
+            document.getElementById('editQuirkActions').style.display = isEditQuirkMode ? 'flex' : 'none';
+            document.getElementById('editQuirkBtn').textContent = isEditQuirkMode ? '❌ Cancelar' : '✏️ Editar';
+        }
+
+        function cancelEdit() {
+            toggleEditMode();
+            displayProfileData(currentUserData);
+        }
+
+        function cancelEditQuirk() {
+            toggleEditQuirk();
+            displayProfileData(currentUserData);
+        }
+
+        async function saveProfile(e) {
+            e.preventDefault();
+            
+            const profileData = {
+                nombre: document.getElementById('nombreInput').value,
+                nombreHeroe: document.getElementById('nombreHeroeInput').value
+            };
+
+            try {
+                const response = await API.Auth.updateProfile(profileData, newAvatar);
+                
+                if (response.success) {
+                    API.showToast('Perfil actualizado exitosamente', 'success');
+                    currentUserData = response.data;
+                    displayProfileData(response.data);
+                    toggleEditMode();
+                    newAvatar = null;
+                }
+            } catch (error) {
+                console.error('Error guardando perfil:', error);
+                API.showToast('Error al guardar el perfil', 'error');
+            }
+        }
+
+        async function saveQuirk(e) {
+            e.preventDefault();
+            
+            const quirkData = {
+                quirk: {
+                    nombre: document.getElementById('quirkNombreInput').value,
+                    tipo: document.getElementById('quirkTipoInput').value,
+                    descripcion: document.getElementById('quirkDescripcionInput').value
+                }
+            };
+
+            try {
+                const response = await API.Auth.updateProfile(quirkData);
+                
+                if (response.success) {
+                    API.showToast('Quirk actualizado exitosamente', 'success');
+                    currentUserData = response.data;
+                    displayProfileData(response.data);
+                    toggleEditQuirk();
+                }
+            } catch (error) {
+                console.error('Error guardando quirk:', error);
+                API.showToast('Error al guardar el quirk', 'error');
+            }
+        }
+
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                newAvatar = file;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('profileAvatar').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                API.showToast('Avatar seleccionado. Guarda los cambios para aplicar.', 'info');
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function switchTrainingTab(type) {
+            document.querySelectorAll('.mini-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('enrolledTrainings').style.display = type === 'enrolled' ? 'block' : 'none';
+            document.getElementById('completedTrainings').style.display = type === 'completed' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Ranking - Academia U.A.</title>
+    
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages/ranking.css">
+    
+    
+    <link rel="icon" href="../assets/gif almyght.gif">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="dashboard.html" class="navbar-brand">
+                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
+                </a>
+                
+                
+                <ul class="navbar-nav hidden md:flex">
+                    <li><a href="dashboard.html" class="navbar-link">Dashboard</a></li>
+                    <li><a href="trainings.html" class="navbar-link">Entrenamientos</a></li>
+                    <li><a href="ranking.html" class="navbar-link active">Ranking</a></li>
+                    <li class="admin-only" style="display: none;"><a href="admin.html" class="navbar-link">Admin</a></li>
+                    <li><a href="profile.html" class="navbar-link">Mi Perfil</a></li>
+                </ul>
+                
+                
+                <div class="flex items-center gap-4">
+                    <div class="user-info hidden md:flex items-center gap-2">
+                        <img src="" alt="Avatar" class="user-avatar w-8 h-8 rounded-full border-2 border-deku-green">
+                        <span class="user-name text-sm font-medium">Cargando...</span>
+                        <span class="badge badge-primary user-level">Lv. --</span>
+                    </div>
+                    
+                    <button onclick="logout()" class="btn btn-ghost btn-sm">
+                        🚪 Salir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="container py-8">
+        
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-bold mb-2">🏆 Ranking de Héroes</h1>
+            <p class="text-secondary">Los mejores estudiantes de la U.A. High School</p>
+        </div>
+
+        
+        <div class="card mb-8">
+            <div class="card-body">
+                <div class="flex items-center gap-4 flex-wrap">
+                    <label class="font-semibold">Filtrar por clase:</label>
+                    <button onclick="filterByClass(null)" class="btn btn-sm filter-btn active" data-class="all">
+                        Todas las Clases
+                    </button>
+                    <button onclick="filterByClass('1-A')" class="btn btn-sm btn-outline filter-btn" data-class="1-A">1-A</button>
+                    <button onclick="filterByClass('1-B')" class="btn btn-sm btn-outline filter-btn" data-class="1-B">1-B</button>
+                    <button onclick="filterByClass('2-A')" class="btn btn-sm btn-outline filter-btn" data-class="2-A">2-A</button>
+                    <button onclick="filterByClass('2-B')" class="btn btn-sm btn-outline filter-btn" data-class="2-B">2-B</button>
+                    <button onclick="filterByClass('3-A')" class="btn btn-sm btn-outline filter-btn" data-class="3-A">3-A</button>
+                    <button onclick="filterByClass('3-B')" class="btn btn-sm btn-outline filter-btn" data-class="3-B">3-B</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="podiumContainer" class="podium-container mb-8">
+            
+        </div>
+
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">📋 Clasificación Completa</h3>
+            </div>
+            <div class="card-body">
+                <div id="rankingList">
+                    
+                    <div class="text-center py-12">
+                        <div class="spinner mx-auto mb-4"></div>
+                        <p class="text-muted">Cargando ranking...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <script src="../utils/api.js"></script>
+    <script src="../js/main.js"></script>
+    
+    
+    <script>
+        let currentClass = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRanking();
+        });
+
+        async function loadRanking(clase = null) {
+            try {
+                const response = await API.Auth.getRanking(100, clase);
+                
+                if (response.success) {
+                    displayPodium(response.data.slice(0, 3));
+                    displayRankingList(response.data);
+                }
+            } catch (error) {
+                console.error('Error cargando ranking:', error);
+                document.getElementById('rankingList').innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-4xl mb-4">😕</div>
+                        <p class="text-muted">Error al cargar el ranking</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayPodium(topThree) {
+            const container = document.getElementById('podiumContainer');
+            
+            if (topThree.length < 3) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const [first, second, third] = topThree;
+            
+            container.innerHTML = `
+                <div class="podium">
+                    
+                    <div class="podium-item podium-second">
+                        <div class="podium-medal">🥈</div>
+                        <div class="podium-avatar-container">
+                            <img src="${second.avatar ? `http://localhost:5000/uploads/${second.avatar}` : API.Utils.getDefaultAvatar(second.nombre)}" 
+                                 alt="${second.nombre}" class="podium-avatar">
+                        </div>
+                        <h3 class="podium-name">${second.nombreHeroe || second.nombre}</h3>
+                        <p class="podium-class">${second.clase}</p>
+                        <p class="podium-level">Nivel ${second.nivel}</p>
+                        <p class="podium-points">${second.puntuacion.toLocaleString()} pts</p>
+                        <div class="podium-rank">2</div>
+                    </div>
+
+                    
+                    <div class="podium-item podium-first">
+                        <div class="podium-crown">👑</div>
+                        <div class="podium-medal">🥇</div>
+                        <div class="podium-avatar-container">
+                            <img src="${first.avatar ? `http://localhost:5000/uploads/${first.avatar}` : API.Utils.getDefaultAvatar(first.nombre)}" 
+                                 alt="${first.nombre}" class="podium-avatar">
+                        </div>
+                        <h3 class="podium-name">${first.nombreHeroe || first.nombre}</h3>
+                        <p class="podium-class">${first.clase}</p>
+                        <p class="podium-level">Nivel ${first.nivel}</p>
+                        <p class="podium-points">${first.puntuacion.toLocaleString()} pts</p>
+                        <div class="podium-rank">1</div>
+                    </div>
+
+                    
+                    <div class="podium-item podium-third">
+                        <div class="podium-medal">🥉</div>
+                        <div class="podium-avatar-container">
+                            <img src="${third.avatar ? `http://localhost:5000/uploads/${third.avatar}` : API.Utils.getDefaultAvatar(third.nombre)}" 
+                                 alt="${third.nombre}" class="podium-avatar">
+                        </div>
+                        <h3 class="podium-name">${third.nombreHeroe || third.nombre}</h3>
+                        <p class="podium-class">${third.clase}</p>
+                        <p class="podium-level">Nivel ${third.nivel}</p>
+                        <p class="podium-points">${third.puntuacion.toLocaleString()} pts</p>
+                        <div class="podium-rank">3</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayRankingList(ranking) {
+            const container = document.getElementById('rankingList');
+            const currentUserId = window.currentUser?._id;
+            
+            if (ranking.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-4xl mb-4">🎯</div>
+                        <p class="text-muted">No hay estudiantes en esta clasificación</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = ranking.map((student, index) => {
+                const isCurrentUser = student._id === currentUserId;
+                const rank = index + 1;
+                const rankClass = rank === 1 ? 'rank-gold' : rank === 2 ? 'rank-silver' : rank === 3 ? 'rank-bronze' : '';
+                
+                return `
+                    <div class="ranking-row ${isCurrentUser ? 'ranking-row-current' : ''} ${rankClass}" style="grid-template-columns: auto 1fr auto auto auto;">
+                        <div class="rank-position">
+                            ${rank <= 3 ? getRankEmoji(rank) : `#${rank}`}
+                        </div>
+                        <div class="rank-student">
+                            <img src="${student.avatar ? `http://localhost:5000/uploads/${student.avatar}` : API.Utils.getDefaultAvatar(student.nombre)}" 
+                                 alt="${student.nombre}" class="rank-avatar">
+                            <div class="rank-info">
+                                <h4>${student.nombreHeroe || student.nombre} ${isCurrentUser ? '(Tú)' : ''}</h4>
+                                <p class="rank-class">${student.clase}</p>
+                            </div>
+                        </div>
+                        <div class="rank-stats">
+                            <div class="stat-badge">💪 ${student.estadisticas?.fuerza || 1}</div>
+                            <div class="stat-badge">💨 ${student.estadisticas?.velocidad || 1}</div>
+                            <div class="stat-badge">🎯 ${student.estadisticas?.tecnica || 1}</div>
+                            <div class="stat-badge">🧠 ${student.estadisticas?.inteligencia || 1}</div>
+                            <div class="stat-badge">🤝 ${student.estadisticas?.cooperacion || 1}</div>
+                        </div>
+                        <div class="rank-level">Lv. ${student.nivel}</div>
+                        <div class="rank-points">${student.puntuacion.toLocaleString()} pts</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getRankEmoji(rank) {
+            const emojis = { 1: '🥇', 2: '🥈', 3: '🥉' };
+            return emojis[rank] || `#${rank}`;
+        }
+
+        function filterByClass(clase) {
+            currentClass = clase;
+            loadRanking(clase);
+            
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('btn-outline');
+            });
+            
+            const activeBtn = clase 
+                ? document.querySelector(`[data-class="${clase}"]`)
+                : document.querySelector('[data-class="all"]');
+            
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('btn-outline');
+            }
+        }
+    </script>
+</body>
+</html>

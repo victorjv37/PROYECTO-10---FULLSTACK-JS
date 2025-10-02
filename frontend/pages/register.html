@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Registro - Academia U.A.</title>
+    
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages/register.css">
+    
+    <link rel="icon" href="../assets/gif almyght.gif">
+</head>
+<body class="register-compact">
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="navbar-brand">
+                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
+                </a>
+                
+                <div class="flex items-center gap-4">
+                    <a href="../index.html" class="navbar-link">Volver al Inicio</a>
+                    <a href="login.html" class="btn btn-outline btn-sm">Iniciar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="min-h-screen py-4 items-center justify-center">
+        <div class="container flex-display max-w-2xl">
+            
+            <div class="text-center mb-4">
+                <img src="../assets/gif almyght.gif" alt="All Might" class="w-12 h-12 mx-auto mb-2">
+                <h1 class="text-xl font-bold mb-1">¡Únete a la Academia U.A.!</h1>
+                <p class="text-secondary text-xs">
+                    Crea tu perfil de héroe y comienza tu entrenamiento
+                </p>
+            </div>
+
+            
+            <div class="card card-deku">
+                <div class="card-body">
+                    <form id="registerForm" class="space-y-3">
+                        
+                        <div class="progress-steps mb-4">
+                            <div class="flex justify-between items-center">
+                                <div class="step step-1 active" data-step="1">
+                                    <div class="step-circle">1</div>
+                                    <span class="step-label">Personal</span>
+                                </div>
+                                <div class="step-line"></div>
+                                <div class="step step-2" data-step="2">
+                                    <div class="step-circle">2</div>
+                                    <span class="step-label">Quirk</span>
+                                </div>
+                                <div class="step-line"></div>
+                                <div class="step step-3" data-step="3">
+                                    <div class="step-circle">3</div>
+                                    <span class="step-label">Academia</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-step" id="step1">
+                            <h3 class="text-base font-bold mb-3 text-center flex items-center justify-center gap-2">
+                                <img src="../assets/gif almyght.gif" alt="All Might" class="w-5 h-5"> Información Personal
+                            </h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                
+                                <div class="form-group md:col-span-2">
+                                    <label for="nombre" class="form-label">
+                                        <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Nombre Completo
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="nombre" 
+                                        name="nombre" 
+                                        class="form-input" 
+                                        placeholder="Ej: Izuku Midoriya"
+                                        required
+                                    >
+                                </div>
+
+                                
+                                <div class="form-group md:col-span-2">
+                                    <label for="nombreHeroe" class="form-label">
+                                        <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Nombre de Héroe (Opcional)
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="nombreHeroe" 
+                                        name="nombreHeroe" 
+                                        class="form-input" 
+                                        placeholder="Ej: Deku"
+                                    >
+                                    <small class="text-muted">Puedes cambiarlo después en tu perfil</small>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="email" class="form-label">
+                                        <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Correo Electrónico
+                                    </label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        class="form-input" 
+                                        placeholder="tu.email@ua.edu"
+                                        required
+                                    >
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="password" class="form-label">
+                                        <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Contraseña
+                                    </label>
+                                    <input 
+                                        type="password" 
+                                        id="password" 
+                                        name="password" 
+                                        class="form-input" 
+                                        placeholder="Mínimo 6 caracteres"
+                                        required
+                                        minlength="6"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end mt-4">
+                                <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                                    <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Siguiente: Tu Quirk
+                                </button>
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-step hidden" id="step2">
+                            <h3 class="text-base font-bold mb-3 text-center flex items-center justify-center gap-2">
+                                <img src="../assets/gif almyght.gif" alt="All Might" class="w-5 h-5"> Define tu Quirk
+                            </h3>
+                            
+                            <div class="space-y-3">
+                                
+                                <div class="form-group">
+                                    <label for="quirkNombre" class="form-label">
+                                        💫 Nombre del Quirk
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="quirkNombre" 
+                                        name="quirkNombre" 
+                                        class="form-input" 
+                                        placeholder="Ej: One For All, Explosion, Half-Cold Half-Hot"
+                                        required
+                                    >
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="quirkDescripcion" class="form-label">
+                                        📝 Descripción del Quirk
+                                    </label>
+                                    <textarea 
+                                        id="quirkDescripcion" 
+                                        name="quirkDescripcion" 
+                                        class="form-textarea" 
+                                        placeholder="Describe las habilidades y características de tu quirk..."
+                                        required
+                                    ></textarea>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="quirkTipo" class="form-label">
+                                        🎭 Tipo de Quirk
+                                    </label>
+                                    <select id="quirkTipo" name="quirkTipo" class="form-select" required>
+                                        <option value="">Selecciona el tipo de tu quirk</option>
+                                        <option value="emision">🔥 Emisión - Proyecta energía o sustancias</option>
+                                        <option value="transformacion">🔄 Transformación - Altera el cuerpo del usuario</option>
+                                        <option value="mutacion">🧬 Mutación - Características físicas permanentes</option>
+                                    </select>
+                                    <small class="text-muted">
+                                        <strong>Emisión:</strong> Como los fuegos de Endeavor<br>
+                                        <strong>Transformación:</strong> Como el gigantismo de Mt. Lady<br>
+                                        <strong>Mutación:</strong> Como los tentáculos de Shoji
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between mt-4">
+                                <button type="button" class="btn btn-ghost" onclick="prevStep(1)">
+                                    ⬅️ Anterior
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                                    <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Siguiente: Academia
+                                </button>
+                            </div>
+                        </div>
+
+                        
+                        <div class="form-step hidden" id="step3">
+                            <h3 class="text-base font-bold mb-3 text-center flex items-center justify-center gap-2">
+                                <img src="../assets/gif almyght.gif" alt="All Might" class="w-5 h-5"> Configuración de Academia
+                            </h3>
+                            
+                            <div class="space-y-3">
+                                
+                                <div class="form-group">
+                                    <label for="clase" class="form-label">
+                                        🎓 Clase
+                                    </label>
+                                    <select id="clase" name="clase" class="form-select" required>
+                                        <option value="">Selecciona tu clase</option>
+                                        <option value="1-A">🌟 Clase 1-A (Elite)</option>
+                                        <option value="1-B">⭐ Clase 1-B (Competitiva)</option>
+                                        <option value="2-A">🏆 Clase 2-A (Avanzada)</option>
+                                        <option value="2-B">🎯 Clase 2-B (Especializada)</option>
+                                        <option value="3-A">👑 Clase 3-A (Élite Senior)</option>
+                                        <option value="3-B">💎 Clase 3-B (Especialistas Senior)</option>
+                                    </select>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="rol" class="form-label">
+                                        👤 Rol en la Academia
+                                    </label>
+                                    <select id="rol" name="rol" class="form-select">
+                                        <option value="estudiante">🎓 Estudiante (por defecto)</option>
+                                        <option value="profesor">👨‍🏫 Profesor (requiere aprobación)</option>
+                                    </select>
+                                    <small class="text-muted">
+                                        Los profesores pueden crear y gestionar entrenamientos
+                                    </small>
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label class="flex items-start gap-3">
+                                        <input type="checkbox" id="terms" class="form-checkbox mt-1" required>
+                                        <span class="text-sm text-secondary">
+                                            Acepto los <a href="#" class="text-deku-green hover:text-deku-green-light">términos y condiciones</a> 
+                                            de la Academia U.A. y me comprometo a seguir el código de conducta heroica.
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between mt-4">
+                                <button type="button" class="btn btn-ghost" onclick="prevStep(2)">
+                                    ⬅️ Anterior
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="registerBtn">
+                                    <span class="register-text"><img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> ¡Unirse a la Academia!</span>
+                                    <span class="register-loading hidden">
+                                        <div class="spinner inline-block w-5 h-5 mr-2"></div>
+                                        Registrando...
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            
+            <div class="text-center mt-4">
+                <p class="text-secondary text-sm">
+                    ¿Ya tienes una cuenta? 
+                    <a href="login.html" class="text-deku-green hover:text-deku-green-light font-medium">
+                        Inicia sesión aquí
+                    </a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    
+    <script src="../utils/api.js"></script>
+    <script src="../js/main.js"></script>
+    
+    
+    <script>
+        let currentStep = 1;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerForm = document.getElementById('registerForm');
+            const registerBtn = document.getElementById('registerBtn');
+
+            
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!API.validateForm(this)) {
+                    return;
+                }
+
+                const formData = new FormData(this);
+                const studentData = {
+                    nombre: formData.get('nombre'),
+                    nombreHeroe: formData.get('nombreHeroe') || null,
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    quirk: {
+                        nombre: formData.get('quirkNombre'),
+                        descripcion: formData.get('quirkDescripcion'),
+                        tipo: formData.get('quirkTipo')
+                    },
+                    clase: formData.get('clase'),
+                    rol: formData.get('rol') || 'estudiante'
+                };
+
+                handleRegister(studentData);
+            });
+
+            
+            async function handleRegister(studentData) {
+                try {
+                    
+                    setLoadingState(true);
+
+                    
+                    const response = await API.Auth.register(studentData);
+
+                    if (response.success) {
+                        API.showToast(response.message, 'success');
+                        
+                        
+                        setTimeout(() => {
+                            API.redirectToDashboard();
+                        }, 2000);
+                    } else {
+                        API.showToast(response.message || 'Error en el registro', 'error');
+                    }
+
+                } catch (error) {
+                    console.error('Error en registro:', error);
+                    API.showToast('Error al conectar con el servidor', 'error');
+                } finally {
+                    setLoadingState(false);
+                }
+            }
+
+            
+            function setLoadingState(isLoading) {
+                const registerText = registerBtn.querySelector('.register-text');
+                const registerLoading = registerBtn.querySelector('.register-loading');
+                
+                if (isLoading) {
+                    registerText.classList.add('hidden');
+                    registerLoading.classList.remove('hidden');
+                    registerBtn.disabled = true;
+                } else {
+                    registerText.classList.remove('hidden');
+                    registerLoading.classList.add('hidden');
+                    registerBtn.disabled = false;
+                }
+            }
+
+            
+            document.getElementById('nombre').focus();
+        });
+
+        
+        function nextStep(step) {
+            if (validateCurrentStep()) {
+                showStep(step);
+            }
+        }
+
+        function prevStep(step) {
+            showStep(step);
+        }
+
+        function showStep(step) {
+            
+            document.querySelectorAll('.form-step').forEach(stepEl => {
+                stepEl.classList.add('hidden');
+            });
+            
+            
+            document.getElementById(`step${step}`).classList.remove('hidden');
+            
+            
+            document.querySelectorAll('.step').forEach(stepEl => {
+                stepEl.classList.remove('active', 'completed');
+                const stepNum = parseInt(stepEl.getAttribute('data-step'));
+                
+                if (stepNum === step) {
+                    stepEl.classList.add('active');
+                } else if (stepNum < step) {
+                    stepEl.classList.add('completed');
+                }
+            });
+            
+            currentStep = step;
+        }
+
+        function validateCurrentStep() {
+            const currentStepEl = document.getElementById(`step${currentStep}`);
+            const requiredInputs = currentStepEl.querySelectorAll('input[required], select[required], textarea[required]');
+            
+            let isValid = true;
+            
+            requiredInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('border-danger');
+                    isValid = false;
+                } else {
+                    input.classList.remove('border-danger');
+                }
+            });
+            
+            if (!isValid) {
+                API.showToast('Por favor completa todos los campos requeridos', 'warning');
+            }
+            
+            return isValid;
+        }
+    </script>
+</body>
+</html>

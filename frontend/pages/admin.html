@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Administración - Academia U.A.</title>
+    
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pages/admin.css">
+    
+    
+    <link rel="icon" href="../assets/gif almyght.gif">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="dashboard.html" class="navbar-brand">
+                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
+                </a>
+                
+                
+                <ul class="navbar-nav hidden md:flex">
+                    <li><a href="dashboard.html" class="navbar-link">Dashboard</a></li>
+                    <li><a href="trainings.html" class="navbar-link">Entrenamientos</a></li>
+                    <li><a href="ranking.html" class="navbar-link">Ranking</a></li>
+                    <li><a href="admin.html" class="navbar-link active">Admin</a></li>
+                    <li><a href="profile.html" class="navbar-link">Mi Perfil</a></li>
+                </ul>
+                
+                
+                <div class="flex items-center gap-4">
+                    <div class="user-info hidden md:flex items-center gap-2">
+                        <img src="" alt="Avatar" class="user-avatar w-8 h-8 rounded-full border-2 border-deku-green">
+                        <span class="user-name text-sm font-medium">Cargando...</span>
+                        <span class="badge badge-primary user-level">Lv. --</span>
+                    </div>
+                    
+                    <button onclick="logout()" class="btn btn-ghost btn-sm">
+                        🚪 Salir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="container py-8">
+        
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-2">⚙️ Panel de Administración</h1>
+            <p class="text-secondary">Gestiona entrenamientos y estudiantes - Solo Profesores</p>
+        </div>
+
+        
+        <div class="mb-8">
+            <button onclick="showCreateTrainingModal()" class="btn btn-primary btn-lg">
+                ➕ Crear Nuevo Entrenamiento
+            </button>
+        </div>
+
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">📋 Mis Entrenamientos Creados</h3>
+            </div>
+            <div class="card-body">
+                <div id="myTrainingsContainer">
+                    <div class="text-center py-12">
+                        <div class="spinner mx-auto mb-4"></div>
+                        <p class="text-muted">Cargando entrenamientos...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <div id="createTrainingModal" class="modal">
+        <div class="modal-overlay" onclick="closeCreateModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">➕ Crear Nuevo Entrenamiento</h2>
+                <button onclick="closeCreateModal()" class="modal-close">✕</button>
+            </div>
+            
+            <form id="createTrainingForm" class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label class="form-label">Título del Entrenamiento</label>
+                        <input type="text" id="titulo" name="titulo" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label class="form-label">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" class="form-textarea" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Fecha y Hora</label>
+                        <input type="datetime-local" id="fechaHora" name="fechaHora" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Ubicación</label>
+                        <input type="text" id="ubicacion" name="ubicacion" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Entrenamiento</label>
+                        <select id="tipo" name="tipo" class="form-select" required>
+                            <option value="">Seleccionar tipo...</option>
+                            <option value="combate">Combate</option>
+                            <option value="rescate">Rescate</option>
+                            <option value="quirk-development">Desarrollo de Quirk</option>
+                            <option value="resistencia">Resistencia</option>
+                            <option value="estrategia">Estrategia</option>
+                            <option value="trabajo-en-equipo">Trabajo en Equipo</option>
+                            <option value="mision-practica">Misión Práctica</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Dificultad</label>
+                        <select id="dificultad" name="dificultad" class="form-select" required>
+                            <option value="">Seleccionar dificultad...</option>
+                            <option value="principiante">Principiante</option>
+                            <option value="intermedio">Intermedio</option>
+                            <option value="avanzado">Avanzado</option>
+                            <option value="extremo">Extremo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Duración (minutos)</label>
+                        <input type="number" id="duracion" name="duracion" class="form-input" min="30" step="15" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Capacidad Máxima</label>
+                        <input type="number" id="capacidadMaxima" name="capacidadMaxima" class="form-input" min="1" max="50" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nivel Requerido</label>
+                        <input type="number" id="nivelRequerido" name="nivelRequerido" class="form-input" min="1" max="100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Experiencia de Recompensa</label>
+                        <input type="number" id="experiencia" name="experiencia" class="form-input" min="0" value="20">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Puntos de Recompensa</label>
+                        <input type="number" id="puntos" name="puntos" class="form-input" min="0" value="15">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label class="form-label">Imagen/Cartel del Entrenamiento</label>
+                        <input type="file" id="imagen" name="imagen" class="form-input" accept="image/*">
+                        <div id="imagePreview" class="mt-4 hidden">
+                            <img src="" alt="Preview" class="rounded-lg max-h-48">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button onclick="closeCreateModal()" class="btn btn-outline">❌ Cancelar</button>
+                <button onclick="submitCreateTraining()" class="btn btn-primary" id="createBtn">
+                    💾 Crear Entrenamiento
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="../utils/api.js"></script>
+    <script src="../js/main.js"></script>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAccess();
+            loadMyTrainings();
+            setupImagePreview();
+        });
+
+        async function checkAdminAccess() {
+            try {
+                const response = await API.Auth.getProfile();
+                if (response.success) {
+                    const user = response.data;
+                    if (user.rol === 'estudiante') {
+                        API.showToast('Acceso denegado. Solo profesores pueden acceder a esta página.', 'error');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 2000);
+                    }
+                }
+            } catch (error) {
+                console.error('Error verificando acceso:', error);
+            }
+        }
+
+        async function loadMyTrainings() {
+            try {
+                const response = await API.Training.getAll({ limit: 100 });
+                
+                if (response.success) {
+                    const myTrainings = response.data.entrenamientos.filter(t => 
+                        t.instructor._id === window.currentUser?._id
+                    );
+                    displayMyTrainings(myTrainings);
+                }
+            } catch (error) {
+                console.error('Error cargando entrenamientos:', error);
+                document.getElementById('myTrainingsContainer').innerHTML = `
+                    <div class="text-center py-12">
+                        <p class="text-muted">Error al cargar tus entrenamientos</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayMyTrainings(trainings) {
+            const container = document.getElementById('myTrainingsContainer');
+            
+            if (trainings.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-4xl mb-4">📝</div>
+                        <p class="text-muted text-lg mb-2">Aún no has creado entrenamientos</p>
+                        <button onclick="showCreateTrainingModal()" class="btn btn-primary mt-4">
+                            ➕ Crear Primer Entrenamiento
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    ${trainings.map(training => `
+                        <div class="training-admin-card">
+                            <div class="flex gap-4">
+                                <img src="${training.imagen ? `http://localhost:5000/uploads/${training.imagen}` : 'https://via.placeholder.com/150'}" 
+                                     alt="${training.titulo}" 
+                                     class="w-32 h-32 object-cover rounded-lg">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">${training.titulo}</h4>
+                                    <p class="text-sm text-secondary mb-2">${training.descripcion.substring(0, 100)}...</p>
+                                    <div class="flex gap-2 flex-wrap mb-2">
+                                        <span class="badge badge-${training.tipo}">${training.tipo}</span>
+                                        <span class="badge badge-secondary">${training.dificultad}</span>
+                                        <span class="badge badge-primary">${training.numeroParticipantes}/${training.capacidadMaxima} inscritos</span>
+                                    </div>
+                                    <p class="text-xs text-muted">📅 ${API.Utils.formatDate(training.fechaHora)}</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 flex gap-2">
+                                <button onclick="viewTraining('${training._id}')" class="btn btn-sm btn-outline flex-1">
+                                    👁️ Ver Detalles
+                                </button>
+                                ${training.estado === 'programado' ? `
+                                    <button onclick="completeTraining('${training._id}')" class="btn btn-sm btn-success">
+                                        ✅ Marcar Completado
+                                    </button>
+                                ` : `
+                                    <span class="badge badge-success">Completado</span>
+                                `}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function showCreateTrainingModal() {
+            document.getElementById('createTrainingModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCreateModal() {
+            document.getElementById('createTrainingModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('createTrainingForm').reset();
+            document.getElementById('imagePreview').classList.add('hidden');
+        }
+
+        function setupImagePreview() {
+            document.getElementById('imagen').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const preview = document.getElementById('imagePreview');
+                        preview.querySelector('img').src = event.target.result;
+                        preview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        async function submitCreateTraining() {
+            const form = document.getElementById('createTrainingForm');
+            const btn = document.getElementById('createBtn');
+            
+            
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            try {
+                
+                btn.disabled = true;
+                btn.innerHTML = '<div class="spinner inline-block"></div> Creando...';
+
+                
+                const formData = {
+                    titulo: document.getElementById('titulo').value,
+                    descripcion: document.getElementById('descripcion').value,
+                    fechaHora: document.getElementById('fechaHora').value,
+                    ubicacion: document.getElementById('ubicacion').value,
+                    tipo: document.getElementById('tipo').value,
+                    dificultad: document.getElementById('dificultad').value,
+                    duracion: parseInt(document.getElementById('duracion').value),
+                    capacidadMaxima: parseInt(document.getElementById('capacidadMaxima').value),
+                    nivelRequerido: parseInt(document.getElementById('nivelRequerido').value),
+                    recompensas: {
+                        experiencia: parseInt(document.getElementById('experiencia').value),
+                        puntos: parseInt(document.getElementById('puntos').value)
+                    }
+                };
+
+                const imageFile = document.getElementById('imagen').files[0];
+
+                const response = await API.Training.create(formData, imageFile);
+
+                if (response.success) {
+                    API.showToast('¡Entrenamiento creado exitosamente! ¡Plus Ultra!', 'success');
+                    closeCreateModal();
+                    loadMyTrainings();
+                }
+            } catch (error) {
+                console.error('Error creando entrenamiento:', error);
+                API.showToast('Error al crear el entrenamiento: ' + error.message, 'error');
+            } finally {
+                
+                btn.disabled = false;
+                btn.innerHTML = '💾 Crear Entrenamiento';
+            }
+        }
+
+        async function viewTraining(id) {
+            window.location.href = `trainings.html?training=${id}`;
+        }
+
+        async function completeTraining(id) {
+            const confirmed = await API.showConfirmModal('¿Marcar este entrenamiento como completado?');
+            if (!confirmed) return;
+
+            try {
+                const response = await API.Training.complete(id);
+                if (response.success) {
+                    API.showToast('Entrenamiento marcado como completado', 'success');
+                    loadMyTrainings();
+                }
+            } catch (error) {
+                console.error('Error completando entrenamiento:', error);
+                API.showToast('Error al completar el entrenamiento', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
+
