@@ -13,20 +13,7 @@
 </head>
 <body class="register-compact">
     
-    <nav class="navbar">
-        <div class="container">
-            <div class="flex items-center justify-between">
-                <a href="../index.html" class="navbar-brand">
-                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
-                </a>
-                
-                <div class="flex items-center gap-4">
-                    <a href="../index.html" class="navbar-link">Volver al Inicio</a>
-                    <a href="login.html" class="btn btn-outline btn-sm">Iniciar Sesión</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <header id="app-header"></header>
 
     
     <main class="min-h-screen py-4 items-center justify-center">
@@ -65,7 +52,7 @@
                         </div>
 
                         
-                        <div class="form-step" id="step1">
+                        <div class="form-step" id="step1" data-step-id="1">
                             <h3 class="text-base font-bold mb-3 text-center flex items-center justify-center gap-2">
                                 <img src="../assets/gif almyght.gif" alt="All Might" class="w-5 h-5"> Información Personal
                             </h3>
@@ -134,14 +121,14 @@
                             </div>
 
                             <div class="flex justify-end mt-4">
-                                <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                                <button type="button" class="btn btn-primary" data-step-next="2">
                                     <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Siguiente: Tu Quirk
                                 </button>
                             </div>
                         </div>
 
                         
-                        <div class="form-step hidden" id="step2">
+                        <div class="form-step hidden" id="step2" data-step-id="2">
                             <h3 class="text-base font-bold mb-3 text-center flex items-center justify-center gap-2">
                                 <img src="../assets/gif almyght.gif" alt="All Might" class="w-5 h-5"> Define tu Quirk
                             </h3>
@@ -196,17 +183,17 @@
                             </div>
 
                             <div class="flex justify-between mt-4">
-                                <button type="button" class="btn btn-ghost" onclick="prevStep(1)">
+                                <button type="button" class="btn btn-ghost" data-step-prev="1">
                                     ⬅️ Anterior
                                 </button>
-                                <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                                <button type="button" class="btn btn-primary" data-step-next="3">
                                     <img src="../assets/gif almyght.gif" alt="All Might" class="w-4 h-4 inline mr-1"> Siguiente: Academia
                                 </button>
                             </div>
                         </div>
 
                         
-                        <div class="form-step hidden" id="step3">
+                        <div class="form-step hidden" id="step3" data-step-id="3">
                             <h3 class="text-base font-bold mb-3 text-center flex items-center justify-center gap-2">
                                 <img src="../assets/gif almyght.gif" alt="All Might" class="w-5 h-5"> Configuración de Academia
                             </h3>
@@ -255,7 +242,7 @@
                             </div>
 
                             <div class="flex justify-between mt-4">
-                                <button type="button" class="btn btn-ghost" onclick="prevStep(2)">
+                                <button type="button" class="btn btn-ghost" data-step-prev="2">
                                     ⬅️ Anterior
                                 </button>
                                 <button type="submit" class="btn btn-primary" id="registerBtn">
@@ -284,147 +271,9 @@
     </main>
 
     
-    <script src="../utils/api.js"></script>
-    <script src="../js/main.js"></script>
-    
-    
-    <script>
-        let currentStep = 1;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const registerForm = document.getElementById('registerForm');
-            const registerBtn = document.getElementById('registerBtn');
-
-            
-            registerForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                if (!API.validateForm(this)) {
-                    return;
-                }
-
-                const formData = new FormData(this);
-                const studentData = {
-                    nombre: formData.get('nombre'),
-                    nombreHeroe: formData.get('nombreHeroe') || null,
-                    email: formData.get('email'),
-                    password: formData.get('password'),
-                    quirk: {
-                        nombre: formData.get('quirkNombre'),
-                        descripcion: formData.get('quirkDescripcion'),
-                        tipo: formData.get('quirkTipo')
-                    },
-                    clase: formData.get('clase'),
-                    rol: formData.get('rol') || 'estudiante'
-                };
-
-                handleRegister(studentData);
-            });
-
-            
-            async function handleRegister(studentData) {
-                try {
-                    
-                    setLoadingState(true);
-
-                    
-                    const response = await API.Auth.register(studentData);
-
-                    if (response.success) {
-                        API.showToast(response.message, 'success');
-                        
-                        
-                        setTimeout(() => {
-                            API.redirectToDashboard();
-                        }, 2000);
-                    } else {
-                        API.showToast(response.message || 'Error en el registro', 'error');
-                    }
-
-                } catch (error) {
-                    console.error('Error en registro:', error);
-                    API.showToast('Error al conectar con el servidor', 'error');
-                } finally {
-                    setLoadingState(false);
-                }
-            }
-
-            
-            function setLoadingState(isLoading) {
-                const registerText = registerBtn.querySelector('.register-text');
-                const registerLoading = registerBtn.querySelector('.register-loading');
-                
-                if (isLoading) {
-                    registerText.classList.add('hidden');
-                    registerLoading.classList.remove('hidden');
-                    registerBtn.disabled = true;
-                } else {
-                    registerText.classList.remove('hidden');
-                    registerLoading.classList.add('hidden');
-                    registerBtn.disabled = false;
-                }
-            }
-
-            
-            document.getElementById('nombre').focus();
-        });
-
-        
-        function nextStep(step) {
-            if (validateCurrentStep()) {
-                showStep(step);
-            }
-        }
-
-        function prevStep(step) {
-            showStep(step);
-        }
-
-        function showStep(step) {
-            
-            document.querySelectorAll('.form-step').forEach(stepEl => {
-                stepEl.classList.add('hidden');
-            });
-            
-            
-            document.getElementById(`step${step}`).classList.remove('hidden');
-            
-            
-            document.querySelectorAll('.step').forEach(stepEl => {
-                stepEl.classList.remove('active', 'completed');
-                const stepNum = parseInt(stepEl.getAttribute('data-step'));
-                
-                if (stepNum === step) {
-                    stepEl.classList.add('active');
-                } else if (stepNum < step) {
-                    stepEl.classList.add('completed');
-                }
-            });
-            
-            currentStep = step;
-        }
-
-        function validateCurrentStep() {
-            const currentStepEl = document.getElementById(`step${currentStep}`);
-            const requiredInputs = currentStepEl.querySelectorAll('input[required], select[required], textarea[required]');
-            
-            let isValid = true;
-            
-            requiredInputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.classList.add('border-danger');
-                    isValid = false;
-                } else {
-                    input.classList.remove('border-danger');
-                }
-            });
-            
-            if (!isValid) {
-                API.showToast('Por favor completa todos los campos requeridos', 'warning');
-            }
-            
-            return isValid;
-        }
-    </script>
+    <script src="../utils/api.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/components/navbar.js" defer></script>
+    <script src="../js/pages/register.js" defer></script>
 </body>
 </html>

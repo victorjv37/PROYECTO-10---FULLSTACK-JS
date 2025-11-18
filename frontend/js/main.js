@@ -442,7 +442,10 @@ const AppState = {
   },
 };
 
-window.HeroApp = {
+window.HeroApp = window.HeroApp || {};
+window.HeroApp.Components = window.HeroApp.Components || {};
+
+Object.assign(window.HeroApp, {
   initializeApp,
   logout,
   initializeInteractiveComponents,
@@ -453,6 +456,6 @@ window.HeroApp = {
   isTablet,
   isDesktop,
   AppState,
-};
+});
 
 initializeInteractiveComponents();

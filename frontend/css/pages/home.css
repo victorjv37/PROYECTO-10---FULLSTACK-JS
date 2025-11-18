@@ -428,6 +428,16 @@
     padding: var(--space-16) 0;
   }
 
+  .tab-content#inicio,
+  .tab-content#about,
+  .tab-content#features,
+  .tab-content#classes {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: scroll;
+  }
+
   .hero-title {
     font-size: var(--font-size-4xl);
   }

@@ -1,5 +1,19 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
+class ApiError extends Error {
+  constructor(
+    message,
+    { status = 0, code = null, details = null, payload = null } = {}
+  ) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.code = code;
+    this.details = details;
+    this.payload = payload;
+  }
+}
+
 const TokenManager = {
   get() {
     return localStorage.getItem("heroToken");
@@ -26,6 +40,24 @@ const TokenManager = {
   },
 };
 
+function parseResponseBody(response) {
+  return response
+    .text()
+    .then((text) => {
+      if (!text) return {};
+      try {
+        return JSON.parse(text);
+      } catch (parseError) {
+        console.warn("No se pudo parsear la respuesta JSON:", parseError);
+        return { raw: text };
+      }
+    })
+    .catch((error) => {
+      console.warn("Error obteniendo el cuerpo de la respuesta:", error);
+      return {};
+    });
+}
+
 async function apiFetch(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
   const token = TokenManager.get();
@@ -48,7 +80,7 @@ async function apiFetch(endpoint, options = {}) {
 
   try {
     const response = await fetch(url, config);
-    const data = await response.json();
+    const data = await parseResponseBody(response);
 
     if (response.status === 401) {
       TokenManager.remove();
@@ -57,26 +89,48 @@ async function apiFetch(endpoint, options = {}) {
         "error"
       );
       redirectToLogin();
-      throw new Error("Token expirado");
+      throw new ApiError("Sesión expirada", { status: 401, payload: data });
     }
 
     if (!response.ok) {
-      throw new Error(data.message || "Error en la petición");
+      const message =
+        data?.message ||
+        data?.error ||
+        `Error en la petición (código ${response.status})`;
+      throw new ApiError(message, {
+        status: response.status,
+        code: data?.code,
+        details: data?.errors || data?.details || null,
+        payload: data,
+      });
     }
 
     return data;
   } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+
     console.error("Error en API:", error);
-    throw error;
+    throw new ApiError(
+      "No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.",
+      { status: error?.status || 0 }
+    );
   }
 }
 
 const AuthAPI = {
   async register(studentData) {
-    return await apiFetch("/auth/registro", {
+    const response = await apiFetch("/auth/registro", {
       method: "POST",
       body: JSON.stringify(studentData),
     });
+
+    if (response.success && response.data?.token) {
+      TokenManager.set(response.data.token);
+    }
+
+    return response;
   },
 
   async login(credentials) {
@@ -629,6 +683,7 @@ window.API = {
   Training: TrainingAPI,
   Utils,
   TokenManager,
+  ApiError,
   showToast,
   showLoading,
   hideLoading,
@@ -636,6 +691,8 @@ window.API = {
   hideModal,
   showConfirmModal,
   validateForm,
+  showFieldError,
+  hideFieldError,
   redirectToLogin,
   redirectToDashboard,
 };

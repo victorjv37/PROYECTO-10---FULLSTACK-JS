@@ -13,20 +13,7 @@
 </head>
 <body>
     
-    <nav class="navbar">
-        <div class="container">
-            <div class="flex items-center justify-between">
-                <a href="../index.html" class="navbar-brand">
-                    🦸‍♂️ U.A. HIGH SCHOOL
-                </a>
-                
-                <div class="flex items-center gap-4">
-                    <a href="../index.html" class="navbar-link">Volver al Inicio</a>
-                    <a href="register.html" class="btn btn-outline btn-sm">Registrarse</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <header id="app-header"></header>
 
     
     <main class="login-main">
@@ -115,6 +102,7 @@
                     <div class="test-account-list">
                         <button 
                             class="quick-login"
+                            data-quick-login="true"
                             data-email="midoriya@ua.edu"
                             data-password="123456"
                         >
@@ -131,6 +119,7 @@
                         
                         <button 
                             class="quick-login"
+                            data-quick-login="true"
                             data-email="allmight@ua.edu"
                             data-password="123456"
                         >
@@ -161,109 +150,10 @@
     </main>
 
     
-    <script src="../utils/api.js"></script>
-    <script src="../js/main.js"></script>
-    
-    
-    <script>
-        
-        async function handleLogin(credentials) {
-            const loginBtn = document.getElementById('loginBtn');
-            
-            try {
-                
-                setLoadingState(true);
-
-                
-                const response = await API.Auth.login(credentials);
-
-                if (response.success) {
-                    API.showToast(response.message, 'success');
-                    
-                    
-                    setTimeout(() => {
-                        API.redirectToDashboard();
-                    }, 1000);
-                } else {
-                    API.showToast(response.message || 'Error al iniciar sesión', 'error');
-                }
-
-            } catch (error) {
-                console.error('Error en login:', error);
-                API.showToast('Error al conectar con el servidor', 'error');
-            } finally {
-                setLoadingState(false);
-            }
-        }
-
-        
-        function setLoadingState(isLoading) {
-            const loginBtn = document.getElementById('loginBtn');
-            const loginText = loginBtn.querySelector('.login-text');
-            const loginLoading = loginBtn.querySelector('.login-loading');
-            
-            if (isLoading) {
-                loginText.classList.add('hidden');
-                loginLoading.classList.remove('hidden');
-                loginBtn.disabled = true;
-            } else {
-                loginText.classList.remove('hidden');
-                loginLoading.classList.add('hidden');
-                loginBtn.disabled = false;
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('loginForm');
-            const loginBtn = document.getElementById('loginBtn');
-            const togglePassword = document.getElementById('togglePassword');
-            const passwordInput = document.getElementById('password');
-            const quickLoginBtns = document.querySelectorAll('.quick-login');
-
-            
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.textContent = type === 'password' ? '👁️' : '🙈';
-            });
-
-            
-            quickLoginBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const email = this.getAttribute('data-email');
-                    const password = this.getAttribute('data-password');
-                    
-                    
-                    document.getElementById('email').value = email;
-                    document.getElementById('password').value = password;
-                    
-                    
-                    handleLogin({ email, password });
-                });
-            });
-
-            
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                if (!API.validateForm(this)) {
-                    return;
-                }
-
-                const formData = new FormData(this);
-                const credentials = {
-                    email: formData.get('email'),
-                    password: formData.get('password')
-                };
-
-                handleLogin(credentials);
-            });
-
-
-            
-            document.getElementById('email').focus();
-        });
-    </script>
+    <script src="../utils/api.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/components/navbar.js" defer></script>
+    <script src="../js/pages/login.js" defer></script>
 
 </body>
 </html>

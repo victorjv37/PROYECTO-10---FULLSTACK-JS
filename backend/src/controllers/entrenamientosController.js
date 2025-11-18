@@ -328,6 +328,23 @@ export const inscribirseEntrenamiento = async (req, res) => {
       });
     }
 
+    if (entrenamiento.fechaHora < new Date()) {
+      return res.status(400).json({
+        success: false,
+        code: "TRAINING_PAST",
+        message:
+          "No puedes inscribirte en entrenamientos que ya han finalizado.",
+      });
+    }
+
+    if (entrenamiento.estado !== "programado") {
+      return res.status(400).json({
+        success: false,
+        code: "TRAINING_NOT_AVAILABLE",
+        message: `El entrenamiento está actualmente en estado "${entrenamiento.estado}".`,
+      });
+    }
+
     if (!entrenamiento.puedeParticipar(estudiante)) {
       if (entrenamiento.estaLleno) {
         return res.status(400).json({

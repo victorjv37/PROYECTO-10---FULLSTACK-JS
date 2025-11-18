@@ -198,6 +198,150 @@ const estudiantes = [
       cooperacion: 8,
     },
   },
+  {
+    nombre: "Eijiro Kirishima",
+    nombreHeroe: "Red Riot",
+    email: "kirishima@ua.edu",
+    password: "123456",
+    avatar: "fotoheroe-dynamight.jpeg",
+    quirk: {
+      nombre: "Hardening",
+      descripcion:
+        "Endurece su cuerpo hasta volverse casi indestructible. Perfecto para defensa y combate cercano.",
+      tipo: "mutacion",
+    },
+    clase: "1-A",
+    rol: "estudiante",
+    nivel: 21,
+    puntuacion: 690,
+    estadisticas: {
+      fuerza: 8,
+      velocidad: 6,
+      tecnica: 6,
+      inteligencia: 6,
+      cooperacion: 9,
+    },
+  },
+  {
+    nombre: "Tsuyu Asui",
+    nombreHeroe: "Froppy",
+    email: "asui@ua.edu",
+    password: "123456",
+    avatar: "fotoheroe-uravity.jpeg",
+    quirk: {
+      nombre: "Frog",
+      descripcion:
+        "Habilidades de rana: salto, lengua extensible, respiración acuática y camuflaje básico.",
+      tipo: "mutacion",
+    },
+    clase: "1-A",
+    rol: "estudiante",
+    nivel: 20,
+    puntuacion: 640,
+    estadisticas: {
+      fuerza: 5,
+      velocidad: 7,
+      tecnica: 7,
+      inteligencia: 8,
+      cooperacion: 9,
+    },
+  },
+  {
+    nombre: "Denki Kaminari",
+    nombreHeroe: "Chargebolt",
+    email: "kaminari@ua.edu",
+    password: "123456",
+    avatar: "fotoheroe-ingenium.jpeg",
+    quirk: {
+      nombre: "Electrification",
+      descripcion:
+        "Genera electricidad con su cuerpo. Puede disparar descargas, aunque debe controlar la sobrecarga.",
+      tipo: "emision",
+    },
+    clase: "1-A",
+    rol: "estudiante",
+    nivel: 19,
+    puntuacion: 610,
+    estadisticas: {
+      fuerza: 5,
+      velocidad: 7,
+      tecnica: 6,
+      inteligencia: 5,
+      cooperacion: 7,
+    },
+  },
+  {
+    nombre: "Fumikage Tokoyami",
+    nombreHeroe: "Tsukuyomi",
+    email: "tokoyami@ua.edu",
+    password: "123456",
+    avatar: "fotoheroe-shoto.jpeg",
+    quirk: {
+      nombre: "Dark Shadow",
+      descripcion:
+        "Controla una sombra viviente que crece con la oscuridad y requiere disciplina para no descontrolarse.",
+      tipo: "emision",
+    },
+    clase: "1-A",
+    rol: "estudiante",
+    nivel: 25,
+    puntuacion: 820,
+    estadisticas: {
+      fuerza: 7,
+      velocidad: 7,
+      tecnica: 8,
+      inteligencia: 8,
+      cooperacion: 8,
+    },
+  },
+  {
+    nombre: "Hitoshi Shinso",
+    nombreHeroe: "Brainwash",
+    email: "shinso@ua.edu",
+    password: "123456",
+    avatar: "fotoheroe-eraserhead.jpeg",
+    quirk: {
+      nombre: "Brainwashing",
+      descripcion:
+        "Puede controlar a cualquier persona que responda a su voz. Requiere estrategia y calma bajo presión.",
+      tipo: "emision",
+    },
+    clase: "2-B",
+    rol: "estudiante",
+    nivel: 24,
+    puntuacion: 790,
+    estadisticas: {
+      fuerza: 4,
+      velocidad: 6,
+      tecnica: 8,
+      inteligencia: 10,
+      cooperacion: 7,
+    },
+  },
+  {
+    nombre: "Mirio Togata",
+    nombreHeroe: "Lemillion",
+    email: "togata@ua.edu",
+    password: "123456",
+    avatar: "fotoheroe-almyght.jpeg",
+    quirk: {
+      nombre: "Permeation",
+      descripcion:
+        "Puede volver intangible su cuerpo para atravesar cualquier objeto sólido y desplazarse libremente.",
+      tipo: "transformacion",
+    },
+    clase: "3-A",
+    rol: "profesor",
+    nivel: 95,
+    puntuacion: 9800,
+    estadisticas: {
+      fuerza: 9,
+      velocidad: 9,
+      tecnica: 10,
+      inteligencia: 8,
+      cooperacion: 10,
+    },
+  },
 ];
 
 const entrenamientos = [
@@ -205,7 +349,7 @@ const entrenamientos = [
     titulo: "Entrenamiento de Combate Básico",
     descripcion:
       "Sesión de entrenamiento para mejorar las habilidades de combate cuerpo a cuerpo y el uso básico de quirks en situaciones de enfrentamiento.",
-    fechaHora: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // En una semana
+    fechaHora: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // Ya finalizado
     ubicacion: "Gimnasio Alfa",
     capacidadMaxima: 20,
     nivelRequerido: 1,
@@ -213,6 +357,7 @@ const entrenamientos = [
     dificultad: "principiante",
     duracion: 120,
     imagen: "campo-01.jpeg",
+    estado: "completado",
     recompensas: {
       experiencia: 15,
       puntos: 10,
@@ -222,7 +367,7 @@ const entrenamientos = [
     titulo: "Misión de Rescate en Ciudad",
     descripcion:
       "Simulacro de rescate en un entorno urbano. Los estudiantes deben trabajar en equipo para evacuar civiles y neutralizar amenazas.",
-    fechaHora: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+    fechaHora: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // Evento reciente terminado
     ubicacion: "Ciudad de Entrenamiento",
     capacidadMaxima: 15,
     nivelRequerido: 20,
@@ -230,6 +375,7 @@ const entrenamientos = [
     dificultad: "intermedio",
     duracion: 180,
     imagen: "campo-02.jpeg",
+    estado: "completado",
     recompensas: {
       experiencia: 25,
       puntos: 20,
@@ -239,7 +385,7 @@ const entrenamientos = [
     titulo: "Desarrollo de Quirk Avanzado",
     descripcion:
       "Sesión especializada para el desarrollo y perfeccionamiento de quirks individuales bajo supervisión experta.",
-    fechaHora: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+    fechaHora: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
     ubicacion: "Laboratorio de Quirks",
     capacidadMaxima: 8,
     nivelRequerido: 15,
@@ -247,6 +393,7 @@ const entrenamientos = [
     dificultad: "avanzado",
     duracion: 240,
     imagen: "campo-03.jpeg",
+    estado: "programado",
     recompensas: {
       experiencia: 30,
       puntos: 25,
@@ -256,7 +403,7 @@ const entrenamientos = [
     titulo: "Entrenamiento de Resistencia",
     descripcion:
       "Sesión intensiva para mejorar la resistencia física y mental. Incluye carreras, ejercicios de fuerza y técnicas de respiración.",
-    fechaHora: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+    fechaHora: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
     ubicacion: "Campo de Entrenamiento A",
     capacidadMaxima: 25,
     nivelRequerido: 5,
@@ -264,6 +411,7 @@ const entrenamientos = [
     dificultad: "intermedio",
     duracion: 150,
     imagen: "campo-04.jpeg",
+    estado: "programado",
     recompensas: {
       experiencia: 20,
       puntos: 15,
@@ -273,7 +421,7 @@ const entrenamientos = [
     titulo: "Estrategia de Combate en Equipo",
     descripcion:
       "Los estudiantes aprenderán tácticas avanzadas de combate en equipo y coordinación de quirks para maximizar la efectividad.",
-    fechaHora: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
+    fechaHora: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000),
     ubicacion: "Sala de Combate",
     capacidadMaxima: 12,
     nivelRequerido: 25,
@@ -281,6 +429,7 @@ const entrenamientos = [
     dificultad: "avanzado",
     duracion: 180,
     imagen: "campo-05.jpeg",
+    estado: "programado",
     recompensas: {
       experiencia: 35,
       puntos: 30,
@@ -290,7 +439,7 @@ const entrenamientos = [
     titulo: "Simulacro de Zona de Desastres",
     descripcion:
       "Entrenamiento en condiciones extremas simulando desastres naturales. Requiere adaptabilidad y trabajo bajo presión.",
-    fechaHora: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000),
+    fechaHora: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000),
     ubicacion: "Zona de Desastres",
     capacidadMaxima: 18,
     nivelRequerido: 30,
@@ -298,9 +447,100 @@ const entrenamientos = [
     dificultad: "experto",
     duracion: 300,
     imagen: "campo-06.jpeg",
+    estado: "programado",
     recompensas: {
       experiencia: 50,
       puntos: 40,
+    },
+  },
+  {
+    titulo: "Patrulla Nocturna Supervisada",
+    descripcion:
+      "Recorrido nocturno por la ciudad escuela para practicar vigilancia, sigilo y comunicación silenciosa entre equipos.",
+    fechaHora: new Date(Date.now() + 24 * 24 * 60 * 60 * 1000),
+    ubicacion: "Ciudad de Entrenamiento",
+    capacidadMaxima: 10,
+    nivelRequerido: 22,
+    tipo: "estrategia",
+    dificultad: "intermedio",
+    duracion: 210,
+    imagen: "campo-02.jpeg",
+    estado: "programado",
+    recompensas: {
+      experiencia: 28,
+      puntos: 22,
+    },
+  },
+  {
+    titulo: "Operación de Rescate Acuático",
+    descripcion:
+      "Simulación de rescate en escenarios acuáticos con énfasis en primeros auxilios y coordinación multiclase.",
+    fechaHora: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    ubicacion: "Piscina de Rescate",
+    capacidadMaxima: 14,
+    nivelRequerido: 18,
+    tipo: "rescate",
+    dificultad: "intermedio",
+    duracion: 160,
+    imagen: "campo-03.jpeg",
+    estado: "programado",
+    recompensas: {
+      experiencia: 24,
+      puntos: 18,
+    },
+  },
+  {
+    titulo: "Taller de Innovación Tecnológica",
+    descripcion:
+      "Sesión conjunta con el departamento de soporte para experimentar nuevas herramientas de apoyo heroico.",
+    fechaHora: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000),
+    ubicacion: "Laboratorio de Quirks",
+    capacidadMaxima: 16,
+    nivelRequerido: 12,
+    tipo: "quirk-development",
+    dificultad: "principiante",
+    duracion: 200,
+    imagen: "campo-04.jpeg",
+    estado: "programado",
+    recompensas: {
+      experiencia: 18,
+      puntos: 16,
+    },
+  },
+  {
+    titulo: "Arena de Combate Pro Hero",
+    descripcion:
+      "Batallas supervisadas contra héroes profesionales invitados para poner a prueba los límites de los estudiantes.",
+    fechaHora: new Date(Date.now() + 42 * 24 * 60 * 60 * 1000),
+    ubicacion: "Sala de Combate",
+    capacidadMaxima: 10,
+    nivelRequerido: 35,
+    tipo: "combate",
+    dificultad: "experto",
+    duracion: 240,
+    imagen: "campo-05.jpeg",
+    estado: "programado",
+    recompensas: {
+      experiencia: 55,
+      puntos: 50,
+    },
+  },
+  {
+    titulo: "Simulación de Crisis Internacional",
+    descripcion:
+      "Escenario cooperativo entre clases superiores para resolver una amenaza global con múltiples frentes.",
+    fechaHora: new Date(Date.now() + 50 * 24 * 60 * 60 * 1000),
+    ubicacion: "Gimnasio Beta",
+    capacidadMaxima: 22,
+    nivelRequerido: 28,
+    tipo: "trabajo-en-equipo",
+    dificultad: "avanzado",
+    duracion: 260,
+    imagen: "campo-06.jpeg",
+    estado: "programado",
+    recompensas: {
+      experiencia: 45,
+      puntos: 38,
     },
   },
 ];
@@ -339,7 +579,12 @@ const seedDatabase = async () => {
         instructor: instructorAleatorio._id,
       });
 
-      await entrenamiento.save();
+      const esEventoPasado = entrenamiento.fechaHora < new Date();
+      entrenamiento.estado = entrenamientoData.estado || "programado";
+
+      await entrenamiento.save({
+        validateBeforeSave: !esEventoPasado,
+      });
 
       // Actualizar el instructor
       await Estudiante.findByIdAndUpdate(instructorAleatorio._id, {
@@ -356,6 +601,11 @@ const seedDatabase = async () => {
     );
 
     for (const entrenamiento of entrenamientosCreados) {
+      const esEventoPasado = entrenamiento.estado !== "programado";
+      if (esEventoPasado) {
+        continue;
+      }
+
       const estudiantesElegibles = estudiantesFiltered.filter(
         (e) => e.nivel >= entrenamiento.nivelRequerido
       );

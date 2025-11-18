@@ -12,39 +12,9 @@
     
     <link rel="icon" href="../assets/gif almyght.gif">
 </head>
-<body>
+<body data-page="ranking">
     
-    <nav class="navbar">
-        <div class="container">
-            <div class="flex items-center justify-between">
-                <a href="dashboard.html" class="navbar-brand">
-                    <img src="../assets/gif almyght.gif" alt="All Might" class="navbar-brand-icon"> U.A. HIGH SCHOOL
-                </a>
-                
-                
-                <ul class="navbar-nav hidden md:flex">
-                    <li><a href="dashboard.html" class="navbar-link">Dashboard</a></li>
-                    <li><a href="trainings.html" class="navbar-link">Entrenamientos</a></li>
-                    <li><a href="ranking.html" class="navbar-link active">Ranking</a></li>
-                    <li class="admin-only" style="display: none;"><a href="admin.html" class="navbar-link">Admin</a></li>
-                    <li><a href="profile.html" class="navbar-link">Mi Perfil</a></li>
-                </ul>
-                
-                
-                <div class="flex items-center gap-4">
-                    <div class="user-info hidden md:flex items-center gap-2">
-                        <img src="" alt="Avatar" class="user-avatar w-8 h-8 rounded-full border-2 border-deku-green">
-                        <span class="user-name text-sm font-medium">Cargando...</span>
-                        <span class="badge badge-primary user-level">Lv. --</span>
-                    </div>
-                    
-                    <button onclick="logout()" class="btn btn-ghost btn-sm">
-                        🚪 Salir
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <header id="app-header"></header>
 
     
     <main class="container py-8">
@@ -95,8 +65,10 @@
     </main>
 
     
-    <script src="../utils/api.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../utils/api.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/components/navbar.js" defer></script>
+    <script src="../js/pages/common-auth.js" defer></script>
     
     
     <script>
